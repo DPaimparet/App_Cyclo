@@ -1,14 +1,14 @@
 package be.Denis.Vue;
-
 import javax.swing.JPanel;
 import javax.swing.JButton;
+
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-
 public class MenuMembre extends JPanel {
 	
+	private static final long serialVersionUID = -3785920447746616566L;
 	private JButton btnListeBalade;
 	private JButton btnCompte;
 	private JButton btnProfil;
@@ -17,7 +17,7 @@ public class MenuMembre extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public MenuMembre(JPanel screen, DashBoard dashBoard) {
+	public MenuMembre(DashBoard bureau) {
 		setLayout(new GridLayout(0, 1, 0, 0));
 		
 		
@@ -42,8 +42,9 @@ public class MenuMembre extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				Profil vueProfil = new Profil();
-				vueProfil.setBounds(0, 0, 400, 600);
-				screen.add(vueProfil);
+				bureau.removeScreen();
+				bureau.add(vueProfil);
+				bureau.validate();
 			}
 		});
 		add(btnProfil);
@@ -52,8 +53,8 @@ public class MenuMembre extends JPanel {
 		btnDeconnexion.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				dashBoard.dispose();
-				Connexion conn = new Connexion();
+				bureau.dispose();
+				Login.init();
 			}
 		});
 		add(btnDeconnexion);
