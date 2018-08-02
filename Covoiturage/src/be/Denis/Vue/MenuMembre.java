@@ -2,6 +2,8 @@ package be.Denis.Vue;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -25,6 +27,8 @@ public class MenuMembre extends JPanel {
 		btnListeBalade.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				bureau.changeScreen("balade");
+				
 			}
 		});
 		add(btnListeBalade);
@@ -33,6 +37,7 @@ public class MenuMembre extends JPanel {
 		btnCompte.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				bureau.changeScreen("compte");
 			}
 		});
 		add(btnCompte);
@@ -41,10 +46,7 @@ public class MenuMembre extends JPanel {
 		btnProfil.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Profil vueProfil = new Profil();
-				bureau.removeScreen();
-				bureau.add(vueProfil);
-				bureau.validate();
+				bureau.changeScreen("profil");
 			}
 		});
 		add(btnProfil);

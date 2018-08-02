@@ -3,30 +3,20 @@ package be.Denis.Vue;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
-
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseMotionAdapter;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
 
 public class DashBoard extends JFrame {
 
 	private JPanel contentMenu;
 	private JPanel contentScreen;
-
-	public void setContentMenu(JPanel contentMenu) {
-		this.contentMenu = contentMenu;
-	}
-
-	public void setContentScreen(JPanel contentScreen) {
-		this.contentScreen = contentScreen;
-	}
-
-	public JPanel getContentMenu() {
-		return contentMenu;
-	}
-
-	public JPanel getContentScreen() {
-		return contentScreen;
-	}
+	private JPanel screen;
+	
+	int xx,xy;
 
 	/**
 	 * Launch the application.
@@ -57,7 +47,7 @@ public class DashBoard extends JFrame {
 	 */
 	
 	private void initialize(int nbrMenu) {
-		setUndecorated(false);
+		setUndecorated(true);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0, 0, 1280, 800);
@@ -72,9 +62,13 @@ public class DashBoard extends JFrame {
 		contentScreen.setBackground(Color.LIGHT_GRAY);
 		contentScreen.setBounds(400, 0, 880, 800);
 		
+		screen = new JPanel();
+		screen.setBorder(null);
+		screen.setBackground(Color.GREEN);
+		screen.setBounds(0, 0, 800, 800);
+		
 		switch (nbrMenu) {
 		case 1 : MenuMembre menu = new MenuMembre(this);
-				 //menu.setBounds(0, 0, 400, 600);
 				 contentMenu.add(menu);
 				 this.validate();
 			break;
@@ -87,10 +81,29 @@ public class DashBoard extends JFrame {
 		default : ;
 		}
 		
+	
+		this.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				
+				 xx = e.getX();
+			     xy = e.getY();
+			}
+		});
+		this.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseDragged(MouseEvent arg0) {
+				
+				int x = arg0.getXOnScreen();
+	            int y = arg0.getYOnScreen();
+	            DashBoard.this.setLocation(x - xx, y - xy);  
+			}
+		});
 		
+//		contentScreen.add(screen);
 		add(contentMenu, BorderLayout.WEST);
 		add(contentScreen, BorderLayout.CENTER);
-
+		
 	}
 	
 	/***
@@ -99,6 +112,22 @@ public class DashBoard extends JFrame {
 	
 	public void removeScreen () {
 		this.remove(contentScreen);
+		this.validate();
+	}
+	
+	public void changeScreen(String targetScreen) {
+		JPanel newScreen = null;
+		switch(targetScreen) {
+		case "profil" : newScreen = new Profil();
+			break;
+		case "balade" : newScreen = new Balades();
+			break;
+		}
+		contentScreen.remove(screen);
+		screen = newScreen;
+		System.out.println(targetScreen);
+		contentScreen.add(screen);
+		System.out.println(screen);
 		this.validate();
 	}
 //	
