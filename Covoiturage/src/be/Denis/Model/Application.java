@@ -1,6 +1,5 @@
 package be.Denis.Model;
 
-import be.Denis.Vue.DashBoard;
 import be.Denis.Vue.Login;;
 
 public class Application {

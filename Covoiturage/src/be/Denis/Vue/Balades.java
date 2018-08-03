@@ -5,6 +5,7 @@ import javax.swing.JTable;
 import java.awt.Color;
 import javax.swing.table.DefaultTableModel;
 
+@SuppressWarnings("serial")
 public class Balades extends JPanel {
 	private JTable tblBalades;
 
