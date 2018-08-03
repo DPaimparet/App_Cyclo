@@ -9,6 +9,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.border.EmptyBorder;
 
+@SuppressWarnings("serial")
 public class Profil extends JPanel {
 	private JLabel lblNewLabel;
 	private JButton btnNewButton;

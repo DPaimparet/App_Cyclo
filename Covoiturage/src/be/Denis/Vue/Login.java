@@ -12,24 +12,25 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseMotionAdapter;
+import java.sql.SQLException;
 
 @SuppressWarnings("serial")
 public class Login extends JFrame {
 
-	private JFrame vueLogin;
 	private JPanel contentPane;
-	private JTextField textField;
+	private JTextField txtLoginOuEmail;
 	private JPasswordField passwordField;
 	private JPanel img_accueil;
 	private JPanel containerMenu;
 	private JLabel lblL;
 	private JLabel lblConnexion;
 	private JPanel containerInfo;
-	private JButton button;
+	private JButton btnConnexion;
 	private JLabel lblPassword;
 	private JLabel lblLogin;
 	private JLabel lblCrerUnCompte;
@@ -116,10 +117,11 @@ public class Login extends JFrame {
 		lblLogin.setBounds(300, 100, 73, 31);
 		lblLogin.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		
-		textField = new JTextField();
-		textField.setFont(new Font("Tahoma", Font.BOLD, 20));
-		textField.setBounds(300, 150, 300, 30);
-		textField.setColumns(10);
+		txtLoginOuEmail = new JTextField("Login ou Email");
+		txtLoginOuEmail.setForeground(Color.LIGHT_GRAY);
+		txtLoginOuEmail.setFont(new Font("Tahoma", Font.ITALIC, 15));
+		txtLoginOuEmail.setBounds(300, 150, 300, 30);
+		txtLoginOuEmail.setColumns(10);
 		
 		lblPassword = new JLabel("PASSWORD");
 		lblPassword.setForeground(Color.LIGHT_GRAY);
@@ -130,11 +132,11 @@ public class Login extends JFrame {
 		passwordField.setFont(new Font("Tahoma", Font.BOLD, 20));
 		passwordField.setBounds(300, 300, 300, 30);
 		
-		button = new JButton("Connexion");
-		button.setBounds(300, 450, 300, 40);
-		button.setFont(new Font("Tahoma", Font.BOLD, 20));
-		button.setForeground(Color.WHITE);
-		button.setBackground(new Color(241, 57, 83));
+		btnConnexion = new JButton("Connexion");
+		btnConnexion.setBounds(300, 450, 300, 40);
+		btnConnexion.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btnConnexion.setForeground(Color.WHITE);
+		btnConnexion.setBackground(new Color(241, 57, 83));
 		
 		lblCrerUnCompte = new JLabel("Cr\u00E9er un nouvel utilisateur");
 		lblCrerUnCompte.setBounds(333, 545, 236, 25);
@@ -150,10 +152,10 @@ public class Login extends JFrame {
 		
 		containerInfo.setLayout(null);
 		containerInfo.add(lblLogin);
-		containerInfo.add(textField);
+		containerInfo.add(txtLoginOuEmail);
 		containerInfo.add(lblPassword);
 		containerInfo.add(passwordField);
-		containerInfo.add(button);
+		containerInfo.add(btnConnexion);
 		containerInfo.add(lblCrerUnCompte);
 		containerInfo.add(lbl_close);
 		
@@ -163,18 +165,58 @@ public class Login extends JFrame {
 	
 	public void eventHandler() {
 		
-		button.addActionListener(new ActionListener() {
+		/***
+		 * Connexion
+		 */
+		
+		btnConnexion.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent ev){	
+				if(txtLoginOuEmail != null && passwordField != null){
+					dispose();
+					DashBoard.init(1);
+//					@SuppressWarnings("deprecation")
+//					Personne p = new Personne(textUserName.getText(),password.getText());
+//					try {
+//						if(p.connexion()){
+//							ecranAccueil.dispose();
+//						}else {
+//							lblErreur.setText("login ou mot de passe incorrect");
+//						}
+//					} catch (ClassNotFoundException e) {
+//						e.printStackTrace();
+//					} catch (SQLException e) {
+//						e.printStackTrace();
+//					}
+				}
+			}	
+		});
+		
+		txtLoginOuEmail.addMouseListener(new MouseListener(){
 			@Override
-			public void actionPerformed(ActionEvent ev) {
-				dispose();
-				DashBoard.init(1);
+			public void mouseReleased(MouseEvent e) {}
+			@Override
+			public void mousePressed(MouseEvent e) {}
+			@Override
+			public void mouseExited(MouseEvent e) {}
+			@Override
+			public void mouseEntered(MouseEvent e) {}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				JTextField txtLoginOuEmail = ((JTextField)e.getSource());
+				txtLoginOuEmail.setText("");
+				txtLoginOuEmail.getFont().deriveFont(Font.PLAIN);
+				txtLoginOuEmail.setFont(new Font("Tahoma", Font.BOLD, 20));
+				txtLoginOuEmail.setForeground(Color.black);
+				txtLoginOuEmail.removeMouseListener(this);
 			}
 		});
 		
 		lblCrerUnCompte.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				//todo crï¿½er compte
+				//todo créer compte
+				dispose();
+				Inscription.init();
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
