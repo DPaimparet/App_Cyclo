@@ -14,8 +14,10 @@ public class Balades extends JPanel {
 	public Balades() {
 		setBorder(null);
 		setBackground(Color.LIGHT_GRAY);
+		setLayout(null);
 		
 		tblBalades = new JTable();
+		tblBalades.setBounds(239, 5, 375, 0);
 		tblBalades.setModel(new DefaultTableModel(
 			new Object[][] {
 				

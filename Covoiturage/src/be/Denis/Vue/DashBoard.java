@@ -9,7 +9,7 @@ import java.awt.event.MouseMotionAdapter;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-
+@SuppressWarnings("serial")
 public class DashBoard extends JFrame {
 
 	private JPanel contentMenu;
@@ -56,20 +56,26 @@ public class DashBoard extends JFrame {
 		contentMenu.setBorder(null);
 		contentMenu.setBackground(Color.DARK_GRAY);
 		contentMenu.setBounds(0, 0, 400, 800);
+		contentMenu.setLayout(new BorderLayout(0, 0));
 		
 		contentScreen = new JPanel();
 		contentScreen.setBorder(null);
 		contentScreen.setBackground(Color.LIGHT_GRAY);
 		contentScreen.setBounds(400, 0, 880, 800);
+		contentScreen.setLayout(new BorderLayout(0, 0));
 		
 		screen = new JPanel();
 		screen.setBorder(null);
-		screen.setBackground(Color.GREEN);
+		screen.setBackground(Color.DARK_GRAY);
 		screen.setBounds(0, 0, 800, 800);
+		screen.setLayout(new BorderLayout(0, 0));
+		
+		contentScreen.add(screen, BorderLayout.CENTER);
+
 		
 		switch (nbrMenu) {
 		case 1 : MenuMembre menu = new MenuMembre(this);
-				 contentMenu.add(menu);
+				 contentMenu.add(menu,BorderLayout.CENTER);
 				 this.validate();
 			break;
 		case 2 :
@@ -99,10 +105,11 @@ public class DashBoard extends JFrame {
 	            DashBoard.this.setLocation(x - xx, y - xy);  
 			}
 		});
+
 		
-//		contentScreen.add(screen);
-		add(contentMenu, BorderLayout.WEST);
-		add(contentScreen, BorderLayout.CENTER);
+		getContentPane().setLayout(null);
+		getContentPane().add(contentMenu);
+		getContentPane().add(contentScreen);
 		
 	}
 	
@@ -123,12 +130,10 @@ public class DashBoard extends JFrame {
 		case "balade" : newScreen = new Balades();
 			break;
 		}
-		contentScreen.remove(screen);
-		screen = newScreen;
-		System.out.println(targetScreen);
-		contentScreen.add(screen);
-		System.out.println(screen);
-		this.validate();
+		screen.removeAll();
+		screen.add(newScreen,BorderLayout.CENTER);
+		screen.validate();
+		screen.repaint();
 	}
 //	
 //	/***
