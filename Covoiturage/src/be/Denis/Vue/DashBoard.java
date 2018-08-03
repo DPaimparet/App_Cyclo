@@ -18,6 +18,22 @@ public class DashBoard extends JFrame {
 	
 	int xx,xy;
 
+	public void setContentMenu(JPanel contentMenu) {
+		this.contentMenu = contentMenu;
+	}
+
+	public void setContentScreen(JPanel contentScreen) {
+		this.contentScreen = contentScreen;
+	}
+
+	public JPanel getContentMenu() {
+		return contentMenu;
+	}
+
+	public JPanel getContentScreen() {
+		return contentScreen;
+	}
+
 	/**
 	 * Launch the application.
 	 */
