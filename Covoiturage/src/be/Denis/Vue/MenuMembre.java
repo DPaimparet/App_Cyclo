@@ -35,7 +35,7 @@ public class MenuMembre extends JPanel {
 		btnListeBalade.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				bureau.changeScreen("balade");
+				bureau.changeScreen("baladeMembre");
 				
 			}
 		});
@@ -45,7 +45,7 @@ public class MenuMembre extends JPanel {
 		btnCompte.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				bureau.changeScreen("compte");
+				bureau.changeScreen("compteMembre");
 			}
 		});
 		add(btnCompte);
@@ -54,7 +54,7 @@ public class MenuMembre extends JPanel {
 		btnProfil.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				bureau.changeScreen("profil");
+				bureau.changeScreen("profilMembre");
 			}
 		});
 		add(btnProfil);

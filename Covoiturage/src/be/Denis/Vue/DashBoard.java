@@ -98,20 +98,18 @@ public class DashBoard extends JFrame {
 
 		
 		switch (p.getFonction()) {
-		case "Membre" : MenuMembre menuMembre = new MenuMembre(this);
+		case "Membre" : membre = new Membre(p.getNom(), p.getPrenom(), p.getMatricule(), p.getLogin(), p.getPassword(),
+	 					p.getDateNaissance(), p.getAdresse(), p.getEmail(), p.getSex(), p.getInscription(), p.getFonction());
+						MenuMembre menuMembre = new MenuMembre(this);
 				 		contentMenu.add(menuMembre,BorderLayout.CENTER);
-				 		membre = new Membre(p.getNom(), p.getPrenom(), p.getMatricule(), p.getLogin(), p.getPassword(),
-     				 				p.getDateNaissance(), p.getAdresse(), p.getEmail(), p.getSex(), p.getInscription(), p.getFonction());
 				 		this.validate();
 				 		break;
 		case "Responsable" : MenuResponsable menuResponsable = new MenuResponsable(this);
 		 					 contentMenu.add(menuResponsable,BorderLayout.CENTER);
-		 					 responsable = (Responsable) p;
 		 					 this.validate();
 		 					 break;
 		case "Tresorier" :  MenuTresorier menuTresorier = new MenuTresorier(this);
 		 					contentMenu.add(menuTresorier,BorderLayout.CENTER);
-		 					tresorier = (Tresorier) p;
 		 					this.validate();
 		 					break;
 		}
@@ -146,18 +144,22 @@ public class DashBoard extends JFrame {
 	 * Remove JPanel screen
 	 */
 	
-	public void removeScreen () {
-		this.remove(contentScreen);
-		this.validate();
-	}
+//	public void removeScreen () {
+//		this.remove(contentScreen);
+//		this.validate();
+//	}
 	
 	public void changeScreen(String targetScreen) {
 		JPanel newScreen = null;
 		switch(targetScreen) {
-		case "profil" : newScreen = new Profil(membre);
+		case "profilMembre" : newScreen = new ProfilMembre(membre);
 			break;
-//		case "balade" : newScreen = new Balades(pers);
-//			break;
+		case "profilResponsable" : newScreen = new ProfilResponsable(responsable);
+		break;
+		case "profilTresorier" : newScreen = new ProfilTresorier(tresorier);
+		break;
+		case "baladeMembre" : newScreen = new BaladeMembre(membre);
+			break;
 		}
 		screen.removeAll();
 		screen.add(newScreen,BorderLayout.CENTER);
@@ -165,11 +167,4 @@ public class DashBoard extends JFrame {
 		screen.repaint();
 	}	
 	
-//	
-//	/***
-//	 * Added new JPanel as new screen
-//	 */
-//	public void addNewScreen(JPanel panel) {
-//		dashBoard
-//	}
 }

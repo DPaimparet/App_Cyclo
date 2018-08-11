@@ -8,13 +8,13 @@ import javax.swing.table.DefaultTableModel;
 import be.Denis.Model.*;
 
 @SuppressWarnings("serial")
-public class Balades extends JPanel {
+public class BaladeMembre extends JPanel {
 	private JTable tblBalades;
 
 	/**
 	 * Create the panel.
 	 */
-	public Balades(Personne p) {
+	public BaladeMembre(Personne p) {
 		//Membre m = (Membre)p;
 		setBorder(null);
 		setBackground(Color.LIGHT_GRAY);

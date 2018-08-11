@@ -41,5 +41,9 @@ public abstract class DAO<T> {
 	public LinkedList<Balade> findAllBalade(String categorie){
 		return null;
 	}
-
+	
+	public Float soldeMembre(int matricule) {
+		return null;
+	}
+	
 }

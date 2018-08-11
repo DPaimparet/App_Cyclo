@@ -2,12 +2,16 @@ package be.Denis.DAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
+
+import javax.swing.JOptionPane;
 
 import be.Denis.Model.Membre;
 
 public class MembreDAO extends DAO<Membre>{
+	private Long naissance;
 	
 	public MembreDAO(Connection conn){
 		super(conn);
@@ -33,33 +37,30 @@ public class MembreDAO extends DAO<Membre>{
 
 	@Override
 	public boolean update(Membre obj) {
-//			try{
-//				String updateMembre = "UPDATE membre " 
-//						+ "SET "
-//						+ "nomMembre = ?, prenomMembre = ?,dateNaissance = ?, sexe = ?, categorieMembre = ?, adresse = ?, numeroMaison = ?, codePostal = ?, ville = ?, numTel = ?, eMail = ?, password = ?, fonction = ?"
-//						+ " Where idMembre = " + obj.getNumPersonne();
-//
-//				PreparedStatement prepare = connect.prepareStatement(updateMembre);
-//			    prepare.setString (1, obj.getNom());
-//			    prepare.setString (2, obj.getPrenom());
-//			    prepare.setDate (3, obj.getDate());
-//			    prepare.setString(4, obj.getSexe());
-//			    prepare.setString(5, obj.getCategorie());
-//			    prepare.setString(6, obj.getAdresse());
-//			    prepare.setInt(7, obj.getNumeroMaison());
-//			    prepare.setInt(8, obj.getCodePostal());
-//			    prepare.setString(9, obj.getVille());
-//			    prepare.setLong(10, obj.getNumTel());
-//			    prepare.setString(11, obj.geteMail());
-//			    prepare.setString(12, obj.getPassword());
-//			    prepare.setString(13, obj.getFonction());
-//			    prepare.executeUpdate();
-//			}
-//			catch(SQLException e){
-//				System.out.println(e);
-//				System.out.println("Erreur de connection base de donnees");
-//				return false;
-//			} 
+			naissance = obj.getDateNaissance().getTime();
+			try{
+				String updateMembre = "UPDATE membre " 
+						+ "SET "
+						+ "nom = ?, prenom = ? , login = ?, mdp = ?, dateNaissance = ?, sex = ?, adresse = ?, mail = ?, fonction = ?"
+						+ " Where idMembre = " + obj.getMatricule();
+
+				PreparedStatement prepare = connect.prepareStatement(updateMembre);
+			    prepare.setString (1, obj.getNom());
+			    prepare.setString (2, obj.getPrenom());
+			    prepare.setString(3, obj.getLogin());
+			    prepare.setString(4, obj.getPassword());
+			    prepare.setLong(5, naissance);
+			    prepare.setString(7, obj.getSex());
+			    prepare.setString(8, obj.getAdresse());
+			    prepare.setString(9, obj.getEmail());
+			    prepare.setString(10, obj.getFonction());
+			    prepare.executeUpdate();
+			}
+			catch(SQLException e){
+				System.out.println(e);
+				System.out.println("Erreur de connection base de donnees");
+				return false;
+			} 
 			return true;
 	}
 
@@ -67,6 +68,25 @@ public class MembreDAO extends DAO<Membre>{
 	public LinkedList<Membre> findAll(int id) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public Float soldeMembre(int matricule) {
+		Float solde = null;
+		try{
+			String reqSolde = "SELECT soldeCompte FROM membre WHERE idPersonne = ?";
+			PreparedStatement prepare = connect.prepareStatement(reqSolde);
+			prepare.setInt(1, matricule);
+			ResultSet resultat = prepare.executeQuery();
+			
+			if(resultat.next()) {
+				solde = resultat.getFloat("soldeCompte");
+			}
+		}
+		catch(SQLException e){
+			JOptionPane.showMessageDialog(null, "Erreur de connection base de donnees " + e);
+		} 
+		return solde;
+		
 	}
 	
 }

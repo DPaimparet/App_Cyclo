@@ -3,12 +3,16 @@ package be.Denis.Model;
 import java.util.Date;
 import java.util.List;
 
+import be.Denis.DAO.AbstractDAOFactory;
+import be.Denis.DAO.DAO;
+
 public class Membre extends Personne {
 
-	private float soldeCompte;
+	private Float soldeCompte;
 	private List<Vehicule> listeVehicule;
 	private List<Categorie> listeCategorie;
-
+	private AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
+	private DAO<Personne> MembreDAO = adf.getPersonneDAO();
 	
 	/**
 	 * @return the soldeCompte
@@ -27,10 +31,10 @@ public class Membre extends Personne {
 	public Membre(String nom, String prenom, int matricule, String login, String password, Date dateNaissance,
 			String adresse, String email, String sex, Date inscription, String fonction) {
 		super(nom, prenom, matricule, login, password, dateNaissance, adresse, email, sex, inscription, fonction);
-		this.soldeCompte = connaitreSolde();
+		//this.soldeCompte = connaitreSolde(matricule);
 	}
 	
-	public void updateInfo() {
+	public void updateInfo(String nom, String prenom, String login, String password, Date anniversaire, String sexe, String adresse, String email, String fonction) {
 		// TODO mise à jours vers la DB
 	}
 	
@@ -63,9 +67,8 @@ public class Membre extends Personne {
 		// TODO mise à jour DB
 	}
 	
-	private float connaitreSolde() {
-		float solde = 0;
-		return solde;
+	private float connaitreSolde(int matricule) {
+		return MembreDAO.soldeMembre(matricule);
 	}
 
 }
