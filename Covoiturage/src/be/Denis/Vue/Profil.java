@@ -9,6 +9,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.border.EmptyBorder;
 
+import be.Denis.Model.Membre;
+
 @SuppressWarnings("serial")
 public class Profil extends JPanel {
 	private JLabel lblNewLabel;
@@ -17,14 +19,14 @@ public class Profil extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public Profil() {
+	public Profil( Membre p) {
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 		setBackground(Color.CYAN);
 		setLayout(null);
 		setBounds(0,0,800,800);
 		
 		
-		lblNewLabel = new JLabel("Profil");
+		lblNewLabel = new JLabel(p.getNom());
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblNewLabel.setBounds(347, 27, 62, 44);
 

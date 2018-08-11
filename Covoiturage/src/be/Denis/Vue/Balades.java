@@ -5,6 +5,8 @@ import javax.swing.JTable;
 import java.awt.Color;
 import javax.swing.table.DefaultTableModel;
 
+import be.Denis.Model.*;
+
 @SuppressWarnings("serial")
 public class Balades extends JPanel {
 	private JTable tblBalades;
@@ -12,7 +14,8 @@ public class Balades extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public Balades() {
+	public Balades(Personne p) {
+		//Membre m = (Membre)p;
 		setBorder(null);
 		setBackground(Color.LIGHT_GRAY);
 		setLayout(null);

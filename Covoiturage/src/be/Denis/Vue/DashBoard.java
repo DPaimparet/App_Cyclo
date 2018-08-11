@@ -3,11 +3,16 @@ package be.Denis.Vue;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Window;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseMotionAdapter;
+import java.util.Date;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import be.Denis.Model.*;
 
 @SuppressWarnings("serial")
 public class DashBoard extends JFrame {
@@ -15,6 +20,10 @@ public class DashBoard extends JFrame {
 	private JPanel contentMenu;
 	private JPanel contentScreen;
 	private JPanel screen;
+	
+	private Membre membre;
+	private Responsable responsable;
+	private Tresorier tresorier;
 	
 	int xx,xy;
 
@@ -37,11 +46,11 @@ public class DashBoard extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void init(int nbr) {
+	public static void init(Personne p) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DashBoard frame = new DashBoard(nbr);
+					DashBoard frame = new DashBoard(p);
 					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -54,15 +63,14 @@ public class DashBoard extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public DashBoard(int i) {
-		initialize(i);
-		
+	public DashBoard(Personne p) {
+		initialize(p);
 	}
 	/***
 	 *  Initialize the contents of the frame.
 	 */
 	
-	private void initialize(int nbrMenu) {
+	private void initialize(Personne p) {
 		setUndecorated(true);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -89,18 +97,23 @@ public class DashBoard extends JFrame {
 		contentScreen.add(screen, BorderLayout.CENTER);
 
 		
-		switch (nbrMenu) {
-		case 1 : MenuMembre menu = new MenuMembre(this);
-				 contentMenu.add(menu,BorderLayout.CENTER);
-				 this.validate();
-			break;
-		case 2 :
-			;
-			break;
-		case 3 :
-			;
-			break;
-		default : ;
+		switch (p.getFonction()) {
+		case "Membre" : MenuMembre menuMembre = new MenuMembre(this);
+				 		contentMenu.add(menuMembre,BorderLayout.CENTER);
+				 		membre = new Membre(p.getNom(), p.getPrenom(), p.getMatricule(), p.getLogin(), p.getPassword(),
+     				 				p.getDateNaissance(), p.getAdresse(), p.getEmail(), p.getSex(), p.getInscription(), p.getFonction());
+				 		this.validate();
+				 		break;
+		case "Responsable" : MenuResponsable menuResponsable = new MenuResponsable(this);
+		 					 contentMenu.add(menuResponsable,BorderLayout.CENTER);
+		 					 responsable = (Responsable) p;
+		 					 this.validate();
+		 					 break;
+		case "Tresorier" :  MenuTresorier menuTresorier = new MenuTresorier(this);
+		 					contentMenu.add(menuTresorier,BorderLayout.CENTER);
+		 					tresorier = (Tresorier) p;
+		 					this.validate();
+		 					break;
 		}
 		
 	
@@ -126,7 +139,7 @@ public class DashBoard extends JFrame {
 		getContentPane().setLayout(null);
 		getContentPane().add(contentMenu);
 		getContentPane().add(contentScreen);
-		
+
 	}
 	
 	/***
@@ -141,16 +154,17 @@ public class DashBoard extends JFrame {
 	public void changeScreen(String targetScreen) {
 		JPanel newScreen = null;
 		switch(targetScreen) {
-		case "profil" : newScreen = new Profil();
+		case "profil" : newScreen = new Profil(membre);
 			break;
-		case "balade" : newScreen = new Balades();
-			break;
+//		case "balade" : newScreen = new Balades(pers);
+//			break;
 		}
 		screen.removeAll();
 		screen.add(newScreen,BorderLayout.CENTER);
 		screen.validate();
 		screen.repaint();
-	}
+	}	
+	
 //	
 //	/***
 //	 * Added new JPanel as new screen

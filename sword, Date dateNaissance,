@@ -1,0 +1,95 @@
+[33mcommit 7350a58615a54161d83fc2f40fd7e72c4ae88139[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Merge: 625c702 b389bab
+Author: Paimparet <Denis.Paimparet@condorcet.be>
+Date:   Mon Aug 6 15:23:44 2018 +0200
+
+    Merge branch 'feature/vue'
+
+[33mcommit b389bab33770a01867094d60e028d0b9777353ba[m[33m ([m[1;32mfeature/vue[m[33m)[m
+Author: Paimparet <Denis.Paimparet@condorcet.be>
+Date:   Mon Aug 6 15:22:31 2018 +0200
+
+    Ajout base de données
+    
+    Création du schéma de la base de donnée et la base de données vierge
+
+[33mcommit 625c702a226916863232fca125e343e465838c14[m
+Merge: c6635aa 93e3bd3
+Author: Paimparet <Denis.Paimparet@condorcet.be>
+Date:   Fri Aug 3 21:13:26 2018 +0200
+
+    Merge branch 'feature/vue'
+
+[33mcommit 93e3bd3bb85a2e0a6be1eab48fba4d138ed2847d[m
+Author: Paimparet <Denis.Paimparet@condorcet.be>
+Date:   Fri Aug 3 21:12:36 2018 +0200
+
+    (Fear)(Vue)  Ajout des vues Login, Inscription
+    
+    Ajout des vues Login, Inscription et leurs fonctionnalités, il reste à faire pour ses vues la partie base de données et les DAO associés
+
+[33mcommit c6635aa6ed5e4d4124b059275f572f848038fbf1[m
+Merge: da1d28b fa7f96d
+Author: Paimparet <Denis.Paimparet@condorcet.be>
+Date:   Fri Aug 3 16:36:52 2018 +0200
+
+    Merge remote-tracking branch 'origin/master'
+    
+    Retour sur une version stable, erreur de stash avec GitKraken
+
+[33mcommit da1d28b6b59e73cf313b593007b7f09fa45cf637[m
+Author: Paimparet <Denis.Paimparet@condorcet.be>
+Date:   Fri Aug 3 15:34:34 2018 +0200
+
+    (fear)(DashBoard) Changement des vues automatique
+    
+    Changement des différentes vues sur la même interface fonctionnel
+
+[33mcommit f5571f3340b6e60198a4bf3b6b012c7904d59f3c[m
+Author: Unknown <Denis.Paimparet@condorcet.be>
+Date:   Thu Aug 2 23:32:51 2018 +0200
+
+    Auto stash before merge of "master" and "origin/master"
+
+[33mcommit b2eeb5ccd2e6490a376be6c6162c2e7a71d7b9e2[m
+Author: Denis Paimparet <Denis.Paimparet@condorcet.be>
+Date:   Thu Aug 2 20:23:45 2018 +0200
+
+    (Fear)(app) Création des Vues
+    
+    Gestion des différentes vues et interactions du menu membre
+
+[33mcommit fa7f96d42552d48fe5679141a25251c0520a1f89[m
+Merge: ecd16cf 485dce6
+Author: Unknown <Denis.Paimparet@condorcet.be>
+Date:   Thu Aug 2 20:57:58 2018 +0200
+
+    Merge remote-tracking branch 'origin/master'
+
+[33mcommit ecd16cf1191b7cd429f3b96f9c5a6d8e4a298a25[m
+Author: Denis Paimparet <Denis.Paimparet@condorcet.be>
+Date:   Thu Aug 2 20:23:45 2018 +0200
+
+    (Fear)(app) Création du corps de l'application
+    
+    Corps de l'application et test d'interface multi JPanel
+
+[33mcommit 485dce6b936bf4eb8a1c6088c56d80870ed08d10[m
+Author: Denis Paimparet <Denis.Paimparet@condorcet.be>
+Date:   Thu Aug 2 20:23:45 2018 +0200
+
+    (Fear)(app) CrÃation du corps de l'application
+
+[33mcommit 09d6e94b5f79358858d1cb4e98e83ce0d9378b30[m
+Author: Unknown <Denis.Paimparet@condorcet.be>
+Date:   Thu Aug 2 15:43:22 2018 +0200
+
+    Test GitKraken
+    
+    Test de versionning avec le logiciel GitKraken
+
+[33mcommit d1fa4d31648818b4284f02eb7b1a0ccaec4e3834[m
+Author: Denis Paimparet <paimparet.denis@gmail.com>
+Date:   Mon Jul 30 15:49:01 2018 +0200
+
+    Premier commit de test

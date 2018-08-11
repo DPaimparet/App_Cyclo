@@ -8,10 +8,9 @@ import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import java.awt.Font;
 import javax.swing.border.LineBorder;
-
+@SuppressWarnings("serial")
 public class MenuMembre extends JPanel {
 	
-	private static final long serialVersionUID = -3785920447746616566L;
 	private JButton btnListeBalade;
 	private JButton btnCompte;
 	private JButton btnProfil;

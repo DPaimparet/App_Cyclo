@@ -18,6 +18,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseMotionAdapter;
 import java.sql.SQLException;
+import be.Denis.Model.*;
 
 @SuppressWarnings("serial")
 public class Login extends JFrame {
@@ -30,11 +31,12 @@ public class Login extends JFrame {
 	private JLabel lblL;
 	private JLabel lblConnexion;
 	private JPanel containerInfo;
-	private JButton btnConnexion;
 	private JLabel lblPassword;
 	private JLabel lblLogin;
 	private JLabel lblCrerUnCompte;
 	private JLabel lbl_close;
+	private JLabel lblErreur;
+	private JButton btnConnexion;
 	
 	private int xx, xy;
 
@@ -117,11 +119,12 @@ public class Login extends JFrame {
 		lblLogin.setBounds(300, 100, 73, 31);
 		lblLogin.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		
-		txtLoginOuEmail = new JTextField("Login ou Email");
+		txtLoginOuEmail = new JTextField("Insérez votre login ou votre mail");
 		txtLoginOuEmail.setForeground(Color.LIGHT_GRAY);
 		txtLoginOuEmail.setFont(new Font("Tahoma", Font.ITALIC, 15));
 		txtLoginOuEmail.setBounds(300, 150, 300, 30);
 		txtLoginOuEmail.setColumns(10);
+		
 		
 		lblPassword = new JLabel("PASSWORD");
 		lblPassword.setForeground(Color.LIGHT_GRAY);
@@ -150,11 +153,17 @@ public class Login extends JFrame {
 		lbl_close.setForeground(Color.RED);
 		lbl_close.setFont(new Font("Tahoma", Font.BOLD, 25));
 		
+		lblErreur = new JLabel("");
+		lblErreur.setForeground(Color.RED);
+		lblErreur.setBounds(270, 600, 400, 100);
+		lblErreur.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		
 		containerInfo.setLayout(null);
 		containerInfo.add(lblLogin);
 		containerInfo.add(txtLoginOuEmail);
 		containerInfo.add(lblPassword);
 		containerInfo.add(passwordField);
+		containerInfo.add(lblErreur);
 		containerInfo.add(btnConnexion);
 		containerInfo.add(lblCrerUnCompte);
 		containerInfo.add(lbl_close);
@@ -170,23 +179,23 @@ public class Login extends JFrame {
 		 */
 		
 		btnConnexion.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent ev){	
-				if(txtLoginOuEmail != null && passwordField != null){
-					dispose();
-					DashBoard.init(1);
-//					@SuppressWarnings("deprecation")
-//					Personne p = new Personne(textUserName.getText(),password.getText());
-//					try {
-//						if(p.connexion()){
-//							ecranAccueil.dispose();
-//						}else {
-//							lblErreur.setText("login ou mot de passe incorrect");
-//						}
-//					} catch (ClassNotFoundException e) {
-//						e.printStackTrace();
-//					} catch (SQLException e) {
-//						e.printStackTrace();
-//					}
+			@SuppressWarnings("deprecation")
+			public void actionPerformed(ActionEvent ev){
+				if(!txtLoginOuEmail.getText().equals("") && !passwordField.getText().equals("")){
+					Personne p = new Personne(txtLoginOuEmail.getText().toLowerCase(),passwordField.getText().toLowerCase());
+					try {
+						if(p.connexion()){
+							dispose();
+						}else {
+							lblErreur.setText("login ou mot de passe incorrect");
+						}
+					} catch (ClassNotFoundException e) {
+						e.printStackTrace();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				} else {
+					lblErreur.setText("Veuillez remplir tous les champs");
 				}
 			}	
 		});
@@ -214,7 +223,6 @@ public class Login extends JFrame {
 		lblCrerUnCompte.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				//todo créer compte
 				dispose();
 				Inscription.init();
 			}

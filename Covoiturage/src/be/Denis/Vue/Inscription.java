@@ -5,12 +5,14 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Date;
 
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
@@ -18,6 +20,9 @@ import javax.swing.JTextArea;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+
+import be.Denis.Model.Personne;
+import com.toedter.calendar.JDateChooser;
 
 @SuppressWarnings("serial")
 public class Inscription extends JFrame {
@@ -31,8 +36,13 @@ public class Inscription extends JFrame {
 	private JLabel lblAdress;
 	private JLabel lblLogin;
 	private JLabel lblPassword;
+	private JLabel lblConfirmMotDe;
 	private JLabel lblSexe;
 	private JLabel lblError;
+	private JLabel lblFonction;
+	private JLabel lblDateDeNaissance;
+	private JLabel lblNewLabel;
+	private JLabel lblName;
 	private JTextField fieldName;
 	private JTextField textFieldConfirmPwd;
 	private JTextField textFieldPwd;
@@ -45,6 +55,9 @@ public class Inscription extends JFrame {
 	private JRadioButton rdbtnHomme;
 	private JTextArea textAreaAdress;
 	private JComboBox<String> comboBoxFonction;
+	private JDateChooser dateAnniversaire;
+	
+
 
 	/**
 	 * Launch the application.
@@ -75,7 +88,7 @@ public class Inscription extends JFrame {
 		setResizable(false);
 		setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 500, 800);
+		setBounds(0, 0, 500, 925);
 		setBackground(Color.DARK_GRAY);
 		
 		contentPane = new JPanel();
@@ -90,7 +103,7 @@ public class Inscription extends JFrame {
 		contentPane.add(title);
 		title.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Inscription");
+		lblNewLabel = new JLabel("Inscription");
 		lblNewLabel.setForeground(new Color(152, 251, 152));
 		lblNewLabel.setBounds(29, 11, 164, 53);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 35));
@@ -98,12 +111,12 @@ public class Inscription extends JFrame {
 		
 		form = new JPanel();
 		form.setBackground(Color.DARK_GRAY);
-		form.setBounds(0, 75, 500, 725);
+		form.setBounds(0, 75, 500, 850);
 		contentPane.add(form);
 		form.setLayout(null);
 		
 		
-		JLabel lblName = new JLabel("Nom :");
+		lblName = new JLabel("Nom :");
 		lblName.setForeground(Color.WHITE);
 		lblName.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblName.setBounds(156, 11, 43, 30);
@@ -164,7 +177,7 @@ public class Inscription extends JFrame {
 		textFieldPwd.setBounds(222, 215, 220, 20);
 		form.add(textFieldPwd);
 		
-		JLabel lblConfirmMotDe = new JLabel("Confirm mot de passe :");
+		lblConfirmMotDe = new JLabel("Confirm mot de passe :");
 		lblConfirmMotDe.setForeground(Color.WHITE);
 		lblConfirmMotDe.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblConfirmMotDe.setBounds(30, 254, 169, 40);
@@ -204,22 +217,23 @@ public class Inscription extends JFrame {
 		form.add(rdbtnHomme);
 		
 		textAreaAdress = new JTextArea();
-		textAreaAdress.setBounds(142, 366, 300, 152);
+		textAreaAdress.setBounds(142, 366, 300, 133);
 		form.add(textAreaAdress);
 		
 		lblError = new JLabel("");
-		lblError.setFont(new Font("Tahoma", Font.BOLD, 25));
-		lblError.setBounds(30, 593, 412, 49);
+		lblError.setForeground(Color.RED);
+		lblError.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 15));
+		lblError.setBounds(30, 652, 413, 99);
 		form.add(lblError);
 		
 		btnConfirm = new JButton("Confirmer");
 		btnConfirm.setFont(new Font("Tahoma", Font.BOLD, 20));
-		btnConfirm.setBounds(75, 653, 150, 50);
+		btnConfirm.setBounds(75, 762, 150, 50);
 		form.add(btnConfirm);
 		
 		btnAnnuler = new JButton("Annuler");
 		btnAnnuler.setFont(new Font("Tahoma", Font.BOLD, 20));
-		btnAnnuler.setBounds(275, 653, 150, 50);
+		btnAnnuler.setBounds(277, 762, 150, 50);
 		form.add(btnAnnuler);
 		
 		lbl_close = new JLabel("X");
@@ -235,16 +249,26 @@ public class Inscription extends JFrame {
 		comboBoxFonction.setForeground(Color.WHITE);
 		comboBoxFonction.setBackground(Color.DARK_GRAY);
 		comboBoxFonction.setSize(220, 30);
-		comboBoxFonction.setLocation(222, 552);
+		comboBoxFonction.setLocation(222, 606);
 		comboBoxFonction.setModel(new DefaultComboBoxModel<String>(new String[] {"Membre", "Responsable", "Tresorier"}));
 		comboBoxFonction.setSelectedIndex(0);
 		form.add(comboBoxFonction);
 		
-		JLabel lblFonction = new JLabel("Fonction");
+		lblFonction = new JLabel("Fonction");
 		lblFonction.setForeground(Color.WHITE);
 		lblFonction.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblFonction.setBounds(133, 547, 66, 40);
+		lblFonction.setBounds(30, 601, 66, 40);
 		form.add(lblFonction);
+		
+		lblDateDeNaissance = new JLabel("Date de naissance");
+		lblDateDeNaissance.setForeground(Color.WHITE);
+		lblDateDeNaissance.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblDateDeNaissance.setBounds(30, 520, 142, 40);
+		form.add(lblDateDeNaissance);
+		
+		dateAnniversaire = new JDateChooser();
+		dateAnniversaire.setBounds(222, 530, 220, 30);
+		form.add(dateAnniversaire);
 	}
 	
 	private void eventHandler() {
@@ -274,6 +298,55 @@ public class Inscription extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				rdbtnFemme.setSelected(false);
 			}
+		});
+		
+		// TODO faire l'acces DB et la création de personne
+		btnConfirm.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String nom = fieldName.getText();
+				String prenom = textFieldPrenom.getText();
+				String sexe;
+				String login = textFieldLogin.getText().toLowerCase();
+				String password = textFieldPwd.getText();
+				String passwordBis = textFieldConfirmPwd.getText();
+				String fonction = (String) comboBoxFonction.getSelectedItem();
+				Date anniversaire = dateAnniversaire.getDate();
+				String adresse = textAreaAdress.getText();
+				String email = textFieldMail.getText().toLowerCase();
+				Boolean error = false;
+				Date inscription = new Date();
+				lblError.setText("");
+				lblError.repaint();
+				
+
+				if(rdbtnHomme.isSelected()) {
+					sexe="H";
+				}
+				else {
+					sexe="F";
+				}
+				
+				if(!(password.equals(passwordBis))) {
+					lblError.setText("Les mots de passe ne sont pas identiques");
+					error = true;
+				}
+				
+				if(nom.equals("") || prenom.equals("") || login.equals("") || password.equals("") || anniversaire == null || adresse.equals("") ){
+					lblError.setText("Tous les champs ne sont pas remplis");
+					error = true;
+				}
+
+			if (!error) {
+				Personne p = new Personne (nom, prenom, login, password, anniversaire, adresse, email, sexe, inscription, fonction);
+				if(!p.exist(login, email)) {
+					p.inscription();
+					dispose();
+					Login.init();
+				}else
+					lblError.setText("Un compte existe déjà avec ce login ou mot de passe");
+				}
+			}
+		
 		});
 	}
 }
