@@ -119,7 +119,8 @@ public class PersonneDAO extends DAO<Personne>{
 
 	@Override
 	public boolean update(Personne obj) {
-		return true;
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 

@@ -3,9 +3,12 @@ package be.Denis.DAO;
 import java.sql.Connection;
 
 import be.Denis.Model.Balade;
+import be.Denis.Model.Categorie;
 import be.Denis.Model.Membre;
 import be.Denis.Model.Personne;
 import be.Denis.Model.Responsable;
+import be.Denis.Model.Tresorier;
+import be.Denis.Model.Vehicule;
 
 public class DAOFactory extends AbstractDAOFactory{
 	protected static final Connection conn = AccessDB.getInstance();
@@ -25,5 +28,16 @@ public class DAOFactory extends AbstractDAOFactory{
 	public DAO<Balade> getBaladeDAO() {
 		return new BaladeDAO(conn);
 	}
+	
+	public DAO<Tresorier> getTresorierDAO() {
+		return new TresorierDAO(conn);
+	}
 
+	public DAO<Vehicule> getVehiculeDAO() {
+		return new VehiculeDAO(conn);
+	}
+	
+	public DAO<Categorie> getCategorieDAO() {
+		return new CategorieDAO(conn);
+	}
 }

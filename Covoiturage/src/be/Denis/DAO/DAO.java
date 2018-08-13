@@ -45,5 +45,11 @@ public abstract class DAO<T> {
 	public Float soldeMembre(int matricule) {
 		return null;
 	}
+
+	public boolean addCategorie(Responsable responsable) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
 	
 }

@@ -19,7 +19,6 @@ import com.toedter.calendar.JDateChooser;
 import be.Denis.Model.*;
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
-import java.util.Date;
 import java.awt.event.ActionEvent;
 
 
@@ -42,8 +41,7 @@ public class ProfilMembre extends JPanel {
 	private JTextField textFieldLogin;
 	private JTextField textFieldMail;
 	private JTextField textFieldPrenom;
-	private JButton btnAnnuler;
-	private JButton btnConfirm;
+	private JButton btnModifier;
 	private JRadioButton rdbtnFemme;
 	private JRadioButton rdbtnHomme;
 	private JTextArea textAreaAdress;
@@ -58,7 +56,7 @@ public class ProfilMembre extends JPanel {
 		String sexSelected = p.getSex();
 		
 		setBorder(new EmptyBorder(5, 5, 5, 5));
-		setBackground(Color.CYAN);
+		setBackground(Color.DARK_GRAY);
 		setBounds(0,0,800,800);
 		setLayout(new BorderLayout(0, 0));
 		
@@ -101,6 +99,7 @@ public class ProfilMembre extends JPanel {
 		form.add(lblMail);
 		
 		textFieldMail = new JTextField(p.getEmail());
+		textFieldMail.setEditable(false);
 		textFieldMail.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		textFieldMail.setColumns(10);
 		textFieldMail.setBounds(222, 153, 220, 20);
@@ -113,6 +112,7 @@ public class ProfilMembre extends JPanel {
 		form.add(lblLogin);
 		
 		textFieldLogin = new JTextField(p.getLogin());
+		textFieldLogin.setEditable(false);
 		textFieldLogin.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		textFieldLogin.setColumns(10);
 		textFieldLogin.setBounds(222, 204, 220, 20);
@@ -200,55 +200,55 @@ public class ProfilMembre extends JPanel {
 		dateAnniversaire.setBounds(222, 386, 220, 30);
 		form.add(dateAnniversaire);
 		
-		btnConfirm = new JButton("Confirmer");
-		btnConfirm.setFont(new Font("Tahoma", Font.BOLD, 20));
-		btnConfirm.setBounds(172, 651, 150, 50);
-		form.add(btnConfirm);
+		btnModifier = new JButton("Modifier");
+		btnModifier.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btnModifier.setBounds(325, 650, 150, 50);
+		form.add(btnModifier);
 		
-		btnAnnuler = new JButton("Annuler");
-		btnAnnuler.setFont(new Font("Tahoma", Font.BOLD, 20));
-		btnAnnuler.setBounds(436, 651, 150, 50);
-		form.add(btnAnnuler);
-		
-		btnConfirm.addActionListener(new ActionListener() {
+		rdbtnFemme.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-					String nom = fieldName.getText();
-					String prenom = textFieldPrenom.getText();
-					String sexe;
-					String login = textFieldLogin.getText().toLowerCase();
-					String password = textFieldPwd.getText();
-					String fonction = (String) comboBoxFonction.getSelectedItem();
-					Date anniversaire = dateAnniversaire.getDate();
-					String adresse = textAreaAdress.getText();
-					String email = textFieldMail.getText().toLowerCase();
+				rdbtnHomme.setSelected(false);
+			}
+		});
+		
+		rdbtnHomme.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				rdbtnFemme.setSelected(false);
+			}
+		});
+		
+		btnModifier.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+					p.setNom(fieldName.getText());
+					p.setPrenom(textFieldPrenom.getText());
+					p.setPassword(textFieldPwd.getText());
+					p.setDateNaissance(dateAnniversaire.getDate());
+					p.setAdresse(textAreaAdress.getText());
+
 					Boolean error = false;
 					lblError.setText("");
 					lblError.repaint();
 					
 
 					if(rdbtnHomme.isSelected()) {
-						sexe="H";
+						p.setSex("H");
 					}
 					else {
-						sexe="F";
+						p.setSex("F");
 					}
 					
-					if(nom.equals("") || prenom.equals("") || login.equals("") || password.equals("") || anniversaire == null || adresse.equals("") ){
+					if(p.getNom().equals("") || p.getPrenom().equals("") || p.getLogin().equals("") || p.getPassword().equals("") || p.getDateNaissance() == null || p.getAdresse().equals("") ){
 						lblError.setText("Tous les champs ne sont pas remplis");
 						error = true;
 					}
 
-				if (!error) {
-					if(!p.exist(login, email)) {
-						p.updateInfo(nom, prenom, login, password, anniversaire, sexe, adresse, email, fonction);
+					if (!error) {
+						p.updateInfo();
 						lblError.setText("Les données sont mises à jour");
-					}else
-						lblError.setText("Un compte existe déjà avec ce login ou mot de passe");
 					}
-				}
+			}
+
 		});
 	}
-	
-	
 
 }

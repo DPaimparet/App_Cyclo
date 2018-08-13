@@ -12,7 +12,7 @@ public class Membre extends Personne {
 	private List<Vehicule> listeVehicule;
 	private List<Categorie> listeCategorie;
 	private AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
-	private DAO<Personne> MembreDAO = adf.getPersonneDAO();
+	private DAO<Membre> MembreDAO = adf.getMembreDAO();
 	
 	/**
 	 * @return the soldeCompte
@@ -34,9 +34,11 @@ public class Membre extends Personne {
 		//this.soldeCompte = connaitreSolde(matricule);
 	}
 	
-	public void updateInfo(String nom, String prenom, String login, String password, Date anniversaire, String sexe, String adresse, String email, String fonction) {
-		// TODO mise à jours vers la DB
+	public void updateInfo() {
+		MembreDAO.update(this);
 	}
+	
+	
 	
 	public void payerCotisation(int cotisation) {
 		soldeCompte += cotisation;

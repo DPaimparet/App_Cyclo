@@ -106,6 +106,10 @@ public class DashBoard extends JFrame {
 				 		break;
 		case "Responsable" : MenuResponsable menuResponsable = new MenuResponsable(this);
 		 					 contentMenu.add(menuResponsable,BorderLayout.CENTER);
+		 					 responsable = new Responsable(p.getNom(), p.getPrenom(), p.getMatricule(), p.getLogin(), p.getPassword(),
+		 		 					p.getDateNaissance(), p.getAdresse(), p.getEmail(), p.getSex(), p.getInscription(), p.getFonction());
+		 					 AccueilResponsable accueil = new AccueilResponsable(responsable,this);
+		 					 screen.add(accueil);
 		 					 this.validate();
 		 					 break;
 		case "Tresorier" :  MenuTresorier menuTresorier = new MenuTresorier(this);
@@ -160,6 +164,10 @@ public class DashBoard extends JFrame {
 		break;
 		case "baladeMembre" : newScreen = new BaladeMembre(membre);
 			break;
+		case "creerBalade" : newScreen = new CreerBalade(responsable);
+		break;
+		case "accueilResponsable" : newScreen = new AccueilResponsable(responsable,this);
+		break;
 		}
 		screen.removeAll();
 		screen.add(newScreen,BorderLayout.CENTER);

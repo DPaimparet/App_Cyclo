@@ -5,19 +5,39 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Balade {
+	private int numBalade;
 	private String lieu;
 	private Date dateBalade;
 	private String infoBalade;
 	private List<Vehicule> listeVehicule;
 	private double forfait;
 	private int nbrParticipant;
+	private int cat;
 	
 	private LinkedList<Balade> listBalade;
+	
 	
 	/***
 	 * Getter and Setter
 	 */
-	
+	/**
+	 * @return the numBalade
+	 */
+	public int getNumBalade() {
+		return numBalade;
+	}
+	/**
+	 * @param numBalade the numBalade to set
+	 */
+	public void setNumBalade(int numBalade) {
+		this.numBalade = numBalade;
+	}
+	/**
+	 * @return the cat
+	 */
+	public int getCat() {
+		return cat;
+	}
 	public String getLieu() {
 		return lieu;
 	}
@@ -62,15 +82,15 @@ public class Balade {
 	 * @param dateBalade
 	 * @param infoBalade
 	 * @param forfait
+	 * @param cat
 	 */
-	public Balade(String lieu, Date dateBalade, String infoBalade, double forfait) {
+	public Balade(String lieu, Date dateBalade, String infoBalade, double forfait, int cat) {
 		super();
 		this.lieu = lieu;
 		this.dateBalade = dateBalade;
 		this.infoBalade = infoBalade;
-		this.listeVehicule = listeVehicule;
 		this.forfait = forfait;
-		this.nbrParticipant = nbrParticipant;
+		this.cat = cat;
 	}
 	
 	/***

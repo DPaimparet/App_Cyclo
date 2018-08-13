@@ -42,7 +42,7 @@ public class MembreDAO extends DAO<Membre>{
 				String updateMembre = "UPDATE membre " 
 						+ "SET "
 						+ "nom = ?, prenom = ? , login = ?, mdp = ?, dateNaissance = ?, sex = ?, adresse = ?, mail = ?, fonction = ?"
-						+ " Where idMembre = " + obj.getMatricule();
+						+ " Where idPersonne = " + obj.getMatricule();
 
 				PreparedStatement prepare = connect.prepareStatement(updateMembre);
 			    prepare.setString (1, obj.getNom());
@@ -50,11 +50,12 @@ public class MembreDAO extends DAO<Membre>{
 			    prepare.setString(3, obj.getLogin());
 			    prepare.setString(4, obj.getPassword());
 			    prepare.setLong(5, naissance);
-			    prepare.setString(7, obj.getSex());
-			    prepare.setString(8, obj.getAdresse());
-			    prepare.setString(9, obj.getEmail());
-			    prepare.setString(10, obj.getFonction());
+			    prepare.setString(6, obj.getSex());
+			    prepare.setString(7, obj.getAdresse());
+			    prepare.setString(8, obj.getEmail());
+			    prepare.setString(9, obj.getFonction());
 			    prepare.executeUpdate();
+
 			}
 			catch(SQLException e){
 				System.out.println(e);
