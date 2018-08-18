@@ -12,6 +12,7 @@ import javax.swing.border.LineBorder;
 public class MenuMembre extends JPanel {
 	
 	private JButton btnListeBalade;
+	private JButton btnMesBalade;
 	private JButton btnCompte;
 	private JButton btnProfil;
 	private JButton btnDeconnexion;
@@ -35,11 +36,19 @@ public class MenuMembre extends JPanel {
 		btnListeBalade.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				bureau.changeScreen("baladeMembre");
-				
+				bureau.changeScreen("planningBalade");
 			}
 		});
 		add(btnListeBalade);
+		
+		btnMesBalade = new JButton("Mes balades");
+		btnMesBalade.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				bureau.changeScreen("baladeMembre");
+			}
+		});
+		add(btnMesBalade);
 		
 		btnCompte = new JButton("Compte");
 		btnCompte.addMouseListener(new MouseAdapter() {
@@ -49,6 +58,8 @@ public class MenuMembre extends JPanel {
 			}
 		});
 		add(btnCompte);
+		
+		
 		
 		btnProfil = new JButton("Profil");
 		btnProfil.addMouseListener(new MouseAdapter() {

@@ -13,6 +13,7 @@ public class Membre extends Personne {
 	private List<Categorie> listeCategorie;
 	private AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
 	private DAO<Membre> MembreDAO = adf.getMembreDAO();
+	private DAO<Balade> BaladeDAO = adf.getBaladeDAO();
 	
 	/**
 	 * @return the soldeCompte
@@ -51,7 +52,7 @@ public class Membre extends Personne {
 	}
 	
 	public void reserverBalade(int nbrP, int nbrV) {
-		
+		BaladeDAO.reservation(this,nbrP, nbrV);
 	}
 	
 	public void proposerPlace(int nbrP, int nbrV) {

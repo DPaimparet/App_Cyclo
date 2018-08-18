@@ -62,19 +62,15 @@ public class CategorieDAO extends DAO<Categorie>{
 			if(resultat.next()) {
 				nomCat = resultat.getString("categorie");
 				if(nomCat.equals("route")) {
-					System.out.println(nomCat);
 					categorie = new Cyclo(nomCat);
 				}
 				if(nomCat.equals("descendeur")) {
-					System.out.println(nomCat);
 					categorie = new Cyclo(nomCat);
 				}
 				if(nomCat.equals("randonneur")) {
-					System.out.println(nomCat);
 					categorie = new Cyclo(nomCat);
 				}
 				if(nomCat.equals("trialiste")) {
-					System.out.println(nomCat);
 					categorie = new Cyclo(nomCat);
 				}
 			}

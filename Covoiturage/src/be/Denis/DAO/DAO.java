@@ -38,7 +38,7 @@ public abstract class DAO<T> {
 		return null;
 	}
 	
-	public LinkedList<Balade> findAllBalade(String categorie){
+	public LinkedList<Balade> findAllBalade(int i){
 		return null;
 	}
 	
@@ -49,6 +49,10 @@ public abstract class DAO<T> {
 	public boolean addCategorie(Responsable responsable) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	public void reservation(Membre membre, int nbrP, int nbrV) {
+		
 	}
 	
 	

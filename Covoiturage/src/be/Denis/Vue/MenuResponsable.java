@@ -10,6 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
+import javax.swing.UIManager;
 @SuppressWarnings("serial")
 public class MenuResponsable extends JPanel {
 	
@@ -22,9 +23,9 @@ public class MenuResponsable extends JPanel {
 	 * Create the panel.
 	 */
 	public MenuResponsable(DashBoard bureau) {
-		setForeground(Color.LIGHT_GRAY);
+		setForeground(Color.DARK_GRAY);
 		setBackground(Color.DARK_GRAY);
-		setBorder(new LineBorder(new Color(0, 102, 255), 5, true));
+		setBorder(UIManager.getBorder("Button.border"));
 		setLayout(new GridLayout(0, 1, 0, 0));
 		setBounds(5,5,180,600);
 		
@@ -32,17 +33,21 @@ public class MenuResponsable extends JPanel {
 		btnListeBalade.setForeground(Color.BLUE);
 		btnListeBalade.setBackground(Color.WHITE);
 		btnListeBalade.setFont(new Font("Tahoma", Font.BOLD, 20));
-		btnListeBalade.setIcon(new ImageIcon("images\\home-icon-silhouette.png"));
+		btnListeBalade.setIcon(new ImageIcon("images\\search-icon.png"));
+		
 		btnListeBalade.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				bureau.changeScreen("balade");
-				
+				bureau.changeScreen("baladeResponsable");
 			}
 		});
 		add(btnListeBalade);
 		
 		btnCreerBalade = new JButton("Creer une balade");
+		btnCreerBalade.setForeground(Color.BLUE);
+		btnCreerBalade.setBackground(Color.WHITE);
+		btnCreerBalade.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btnCreerBalade.setIcon(new ImageIcon("images\\Apps-menu-editor-icon.png"));
 		btnCreerBalade.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -52,15 +57,23 @@ public class MenuResponsable extends JPanel {
 		add(btnCreerBalade);
 		
 		btnProfil = new JButton("Profil");
+		btnProfil.setForeground(Color.BLUE);
+		btnProfil.setBackground(Color.WHITE);
+		btnProfil.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btnProfil.setIcon(new ImageIcon("images\\identity-card-icon.png"));
 		btnProfil.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				bureau.changeScreen("profil");
+				bureau.changeScreen("profilResponsable");
 			}
 		});
 		add(btnProfil);
 		
 		btnDeconnexion = new JButton("Deconnexion");
+		btnDeconnexion.setForeground(Color.BLUE);
+		btnDeconnexion.setBackground(Color.WHITE);
+		btnDeconnexion.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btnDeconnexion.setIcon(new ImageIcon("images\\logout-icon.png"));
 		btnDeconnexion.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

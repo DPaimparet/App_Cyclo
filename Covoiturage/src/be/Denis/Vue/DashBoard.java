@@ -147,12 +147,6 @@ public class DashBoard extends JFrame {
 	/***
 	 * Remove JPanel screen
 	 */
-	
-//	public void removeScreen () {
-//		this.remove(contentScreen);
-//		this.validate();
-//	}
-	
 	public void changeScreen(String targetScreen) {
 		JPanel newScreen = null;
 		switch(targetScreen) {
@@ -164,6 +158,10 @@ public class DashBoard extends JFrame {
 		break;
 		case "baladeMembre" : newScreen = new BaladeMembre(membre);
 			break;
+		case "planningBalade" : newScreen = new PlanningBalade(membre);
+		break;
+		case "baladeResponsable" : newScreen = new BaladeResponsable(responsable, this);
+		break;
 		case "creerBalade" : newScreen = new CreerBalade(responsable);
 		break;
 		case "accueilResponsable" : newScreen = new AccueilResponsable(responsable,this);

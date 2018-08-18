@@ -1,6 +1,5 @@
 package be.Denis.Vue;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 
 import javax.swing.JPanel;
@@ -24,6 +23,7 @@ public class CreerBalade extends JPanel {
 	private JTextField textFieldLieu;
 	private JTextField textFieldForfait;
 	private JDateChooser dateChooser;
+	private JLabel lblerror;
 	
 	/**
 	 * Create the panel.
@@ -32,7 +32,7 @@ public class CreerBalade extends JPanel {
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 		setBackground(Color.DARK_GRAY);
 		setBounds(0,0,800,800);
-		setLayout(new BorderLayout(0, 0));
+		setLayout(null);
 		
 		formBalade = new JPanel();
 		formBalade.setBackground(Color.DARK_GRAY);
@@ -64,6 +64,7 @@ public class CreerBalade extends JPanel {
 		
 		textFieldLieu = new JTextField();
 		textFieldLieu.setBounds(468, 148, 150, 20);
+		textFieldLieu.setText("");
 		formBalade.add(textFieldLieu);
 		textFieldLieu.setColumns(10);
 		
@@ -87,6 +88,7 @@ public class CreerBalade extends JPanel {
 		textFieldForfait = new JTextField();
 		textFieldForfait.setColumns(10);
 		textFieldForfait.setBounds(468, 608, 150, 20);
+		textFieldForfait.setText("");
 		formBalade.add(textFieldForfait);
 		
 		JButton btnCreerBalade = new JButton("Cr\u00E9er la balade");
@@ -96,9 +98,42 @@ public class CreerBalade extends JPanel {
 		btnCreerBalade.setBounds(300, 700, 200, 30);
 		formBalade.add(btnCreerBalade);
 		
+		lblerror = new JLabel("");
+		lblerror.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
+		lblerror.setBounds(242, 649, 400, 40);
+		formBalade.add(lblerror);
+		
 		btnCreerBalade.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				responsable.creerBalade(textFieldLieu.getText(), dateChooser.getDate(), txtrInfo.getText(), Float.valueOf(textFieldForfait.getText()));
+				boolean error = false;
+				
+				// Test que les champs ne soient pas vide
+				if(textFieldLieu.getText().isEmpty() || textFieldForfait.getText().isEmpty() || txtrInfo.getText().isEmpty() || dateChooser.getDate() == null ) {
+					error = true;
+					lblerror.setForeground(new Color(241, 57, 83));
+					lblerror.setText("Tous les champs doivent être remplis");
+				}
+				
+				// Vérifie que l'on rentre une valeur correcte
+				String pattern = "^-?\\d*\\.{0,1}\\d+$";
+				if(!textFieldForfait.getText().matches(pattern) ) {
+					error = true;
+					lblerror.setForeground(new Color(241, 57, 83));
+					lblerror.setText("Entrez un nombre correcte pour le forfait");
+				}
+		
+				// s'il n'y a pas d'erreur, je crée la balade
+				if(!error) {
+					responsable.creerBalade(textFieldLieu.getText(), dateChooser.getDate(), txtrInfo.getText(), Double.parseDouble(textFieldForfait.getText()));
+					lblerror.setText("");
+					textFieldLieu.setText("");
+					dateChooser.setDate(null);
+					txtrInfo.setText("Heure de départ : \r\n\r\nInformation de la balade");
+					textFieldForfait.setText("");
+					validate();
+					repaint();
+					
+				}
 			}
 		});
 		
