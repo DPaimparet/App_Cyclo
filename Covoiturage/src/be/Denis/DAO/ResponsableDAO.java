@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 
@@ -74,8 +75,7 @@ public class ResponsableDAO extends DAO<Responsable>{
 	
 	public boolean addCategorie(Responsable obj) {
 		System.out.println("ajout cat Responsable DAO");
-		@SuppressWarnings("deprecation")
-		int annee = new Date().getYear();
+		int annee = Calendar.getInstance().get(Calendar.YEAR);
 		try{
 			String selectCatResponsable = "SELECT * FROM personne_categorie WHERE idCategorie = ? AND idPersonne = ?";
 			

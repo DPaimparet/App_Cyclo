@@ -10,6 +10,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
+
+import be.Denis.Model.Tresorier;
 @SuppressWarnings("serial")
 public class MenuTresorier extends JPanel {
 
@@ -22,7 +24,7 @@ public class MenuTresorier extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public MenuTresorier(DashBoard bureau) {
+	public MenuTresorier(DashBoard bureau, Tresorier tresorier) {
 		setForeground(Color.LIGHT_GRAY);
 		setBackground(Color.DARK_GRAY);
 		setBorder(new LineBorder(new Color(0, 102, 255), 5, true));
@@ -62,6 +64,10 @@ public class MenuTresorier extends JPanel {
 		add(btnCompteForfait);
 		
 		btnProfil = new JButton("Profil");
+		btnProfil.setForeground(Color.BLUE);
+		btnProfil.setBackground(Color.WHITE);
+		btnProfil.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btnProfil.setIcon(new ImageIcon("images\\identity-card-icon.png"));
 		btnProfil.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -71,6 +77,10 @@ public class MenuTresorier extends JPanel {
 		add(btnProfil);
 		
 		btnDeconnexion = new JButton("Deconnexion");
+		btnDeconnexion.setForeground(Color.BLUE);
+		btnDeconnexion.setBackground(Color.WHITE);
+		btnDeconnexion.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btnDeconnexion.setIcon(new ImageIcon("images\\logout-icon.png"));
 		btnDeconnexion.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

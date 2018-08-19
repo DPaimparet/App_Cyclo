@@ -100,19 +100,24 @@ public class DashBoard extends JFrame {
 		switch (p.getFonction()) {
 		case "Membre" : membre = new Membre(p.getNom(), p.getPrenom(), p.getMatricule(), p.getLogin(), p.getPassword(),
 	 					p.getDateNaissance(), p.getAdresse(), p.getEmail(), p.getSex(), p.getInscription(), p.getFonction());
-						MenuMembre menuMembre = new MenuMembre(this);
-				 		contentMenu.add(menuMembre,BorderLayout.CENTER);
+						MenuMembre menuMembre = new MenuMembre(this, membre);
+						contentMenu.add(menuMembre,BorderLayout.CENTER);
+						AccueilMembre accueilMembre = new AccueilMembre(membre,this);
+						screen.add(accueilMembre);
 				 		this.validate();
 				 		break;
-		case "Responsable" : MenuResponsable menuResponsable = new MenuResponsable(this);
+				 		
+		case "Responsable" : responsable = new Responsable(p.getNom(), p.getPrenom(), p.getMatricule(), p.getLogin(), p.getPassword(),
+		 		 			 p.getDateNaissance(), p.getAdresse(), p.getEmail(), p.getSex(), p.getInscription(), p.getFonction());
+		 					 MenuResponsable menuResponsable = new MenuResponsable(this, responsable);
 		 					 contentMenu.add(menuResponsable,BorderLayout.CENTER);
-		 					 responsable = new Responsable(p.getNom(), p.getPrenom(), p.getMatricule(), p.getLogin(), p.getPassword(),
-		 		 					p.getDateNaissance(), p.getAdresse(), p.getEmail(), p.getSex(), p.getInscription(), p.getFonction());
-		 					 AccueilResponsable accueil = new AccueilResponsable(responsable,this);
-		 					 screen.add(accueil);
+		 					 AccueilResponsable accueilResponsable = new AccueilResponsable(responsable,this);
+		 					 screen.add(accueilResponsable);
 		 					 this.validate();
 		 					 break;
-		case "Tresorier" :  MenuTresorier menuTresorier = new MenuTresorier(this);
+		case "Tresorier" :  tresorier = new Tresorier(p.getNom(), p.getPrenom(), p.getMatricule(), p.getLogin(), p.getPassword(),
+		 		 			 p.getDateNaissance(), p.getAdresse(), p.getEmail(), p.getSex(), p.getInscription(), p.getFonction());
+							MenuTresorier menuTresorier = new MenuTresorier(this,tresorier);
 		 					contentMenu.add(menuTresorier,BorderLayout.CENTER);
 		 					this.validate();
 		 					break;
@@ -150,15 +155,15 @@ public class DashBoard extends JFrame {
 	public void changeScreen(String targetScreen) {
 		JPanel newScreen = null;
 		switch(targetScreen) {
-		case "profilMembre" : newScreen = new ProfilMembre(membre);
+		case "profilMembre" : newScreen = new ProfilMembre(membre, this);
 			break;
 		case "profilResponsable" : newScreen = new ProfilResponsable(responsable);
 		break;
 		case "profilTresorier" : newScreen = new ProfilTresorier(tresorier);
 		break;
-		case "baladeMembre" : newScreen = new BaladeMembre(membre);
+		case "baladeMembre" : newScreen = new BaladeMembre(membre, this);
 			break;
-		case "planningBalade" : newScreen = new PlanningBalade(membre);
+		case "planningBalade" : newScreen = new PlanningBalade(membre, this);
 		break;
 		case "baladeResponsable" : newScreen = new BaladeResponsable(responsable, this);
 		break;
@@ -166,6 +171,11 @@ public class DashBoard extends JFrame {
 		break;
 		case "accueilResponsable" : newScreen = new AccueilResponsable(responsable,this);
 		break;
+		case "accueilMembre" : newScreen = new AccueilMembre(membre,this);
+		break;
+		case "vehiculeMembre" : newScreen = new VehiculeMembre(membre,this);
+		break;
+		
 		}
 		screen.removeAll();
 		screen.add(newScreen,BorderLayout.CENTER);
