@@ -1,35 +1,32 @@
 package be.Denis.Vue;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-import be.Denis.Model.Cyclo;
-import be.Denis.Model.Descente;
-import be.Denis.Model.Randonneur;
-import be.Denis.Model.Responsable;
-import be.Denis.Model.Trialiste;
-
-import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JRadioButton;
 import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.border.EmptyBorder;
 
-public class AccueilResponsable extends JPanel {
-	
+import be.Denis.Model.Cyclo;
+import be.Denis.Model.Descente;
+import be.Denis.Model.Membre;
+import be.Denis.Model.Randonneur;
+import be.Denis.Model.Trialiste;
+
+public class AccueilMembre extends JPanel {
+
 	private JPanel accueil;
 	private JButton btnCategorie;
 	private String choix = "route";
-
+	
 	/**
 	 * Create the panel.
 	 */
-	public AccueilResponsable(Responsable responsable, DashBoard bureau) {
+	public AccueilMembre(Membre membre, DashBoard bureau) {
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 		setBackground(Color.DARK_GRAY);
 		setBounds(0,0,800,800);
@@ -40,8 +37,7 @@ public class AccueilResponsable extends JPanel {
 		accueil.setBounds(5,5,790,790);
 		accueil.setLayout(null);
 		add(accueil);
-		
-		if(responsable.getCat() == null) {
+		if(membre.getListeCategorie() == null || membre.getListeCategorie().isEmpty() ) {
 			JLabel lblNewLabel = new JLabel("Vous n'avez pas encore de cat\u00E9gorie");
 			lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
 			lblNewLabel.setForeground(Color.WHITE);
@@ -134,25 +130,25 @@ public class AccueilResponsable extends JPanel {
 				public void actionPerformed(ActionEvent e) {
 					switch (choix) {
 					case "route" : Cyclo cyclo = new Cyclo("route");
-								   responsable.ajouterCategorie(cyclo);
+								   membre.ajouterCategorie(cyclo);
 					break;
 					case "descendeur" : Descente descente = new Descente("descendeur");
-										responsable.ajouterCategorie(descente);
+										membre.ajouterCategorie(descente);
 					break;
 					case "randonneur": Randonneur randonneur = new Randonneur("randonneur");
-									   responsable.ajouterCategorie(randonneur);
+									   membre.ajouterCategorie(randonneur);
 					break;
 					case "trialiste" : Trialiste trialiste = new Trialiste("trialiste");
-									   responsable.ajouterCategorie(trialiste);
+									   membre.ajouterCategorie(trialiste);
 					break;
 					}
-					bureau.changeScreen("accueilResponsable");
+					bureau.changeScreen("accueilMembre");
 				}
 			});
 			
 		}
 		else {
-			JLabel lblBienvenu = new JLabel("Bienvenue " + responsable.getPrenom());
+			JLabel lblBienvenu = new JLabel("Bienvenue " + membre.getPrenom());
 			lblBienvenu.setFont(new Font("Tahoma", Font.BOLD, 25));
 			lblBienvenu.setForeground(Color.WHITE);
 			lblBienvenu.setBackground(Color.DARK_GRAY);
@@ -166,36 +162,51 @@ public class AccueilResponsable extends JPanel {
 			lblVoiciVotreTableau.setBounds(36, 150, 724, 74);
 			accueil.add(lblVoiciVotreTableau);
 			
-			JLabel lblRleDeResponsable = new JLabel("r\u00F4le de responsable");
-			lblRleDeResponsable.setForeground(Color.WHITE);
-			lblRleDeResponsable.setFont(new Font("Tahoma", Font.BOLD, 25));
-			lblRleDeResponsable.setBackground(Color.DARK_GRAY);
-			lblRleDeResponsable.setBounds(36, 250, 258, 51);
-			accueil.add(lblRleDeResponsable);
+			JLabel lblRleDemembre = new JLabel("r\u00F4le de membre");
+			lblRleDemembre.setForeground(Color.WHITE);
+			lblRleDemembre.setFont(new Font("Tahoma", Font.BOLD, 25));
+			lblRleDemembre.setBackground(Color.DARK_GRAY);
+			lblRleDemembre.setBounds(36, 250, 258, 51);
+			accueil.add(lblRleDemembre);
 			
-			JLabel lblVosBalade = new JLabel("Balades : permet de g\u00E9rer vos balades actives");
+			JLabel lblVosBalade = new JLabel("Balades : permet voir les balades actives et de s'y inscrire");
 			lblVosBalade.setForeground(Color.WHITE);
 			lblVosBalade.setFont(new Font("Tahoma", Font.BOLD, 25));
 			lblVosBalade.setBackground(Color.DARK_GRAY);
 			lblVosBalade.setBounds(36, 400, 724, 51);
 			accueil.add(lblVosBalade);
 			
-			JLabel lblCrerBalade = new JLabel("Cr\u00E9er balade : permet de cr\u00E9er des balades");
+			JLabel lblCrerBalade = new JLabel("Mes balades : permet de gérer les balades où vous êtes");
 			lblCrerBalade.setForeground(Color.WHITE);
 			lblCrerBalade.setFont(new Font("Tahoma", Font.BOLD, 25));
 			lblCrerBalade.setBackground(Color.DARK_GRAY);
-			lblCrerBalade.setBounds(36, 500, 724, 51);
+			lblCrerBalade.setBounds(36, 500, 800, 51);
 			accueil.add(lblCrerBalade);
+			
+			JLabel lblCrerB = new JLabel("inscrit");
+			lblCrerB.setForeground(Color.WHITE);
+			lblCrerB.setFont(new Font("Tahoma", Font.BOLD, 25));
+			lblCrerB.setBackground(Color.DARK_GRAY);
+			lblCrerB.setBounds(216, 550, 800, 51);
+			accueil.add(lblCrerB);
+			
+			JLabel lblCompte = new JLabel("Compte : permet de visionner votre compte");
+			lblCompte.setForeground(Color.WHITE);
+			lblCompte.setFont(new Font("Tahoma", Font.BOLD, 25));
+			lblCompte.setBackground(Color.DARK_GRAY);
+			lblCompte.setBounds(36, 600, 724, 51);
+			accueil.add(lblCompte);
 			
 			JLabel lblProfilPermet = new JLabel("Profil : permet de mettre \u00E0 jour vos donn\u00E9es");
 			lblProfilPermet.setForeground(Color.WHITE);
 			lblProfilPermet.setFont(new Font("Tahoma", Font.BOLD, 25));
 			lblProfilPermet.setBackground(Color.DARK_GRAY);
-			lblProfilPermet.setBounds(36, 600, 724, 51);
+			lblProfilPermet.setBounds(36, 700, 724, 51);
 			accueil.add(lblProfilPermet);
 			
 		}
 		
 
 	}
+
 }

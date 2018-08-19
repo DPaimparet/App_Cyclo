@@ -3,6 +3,8 @@ package be.Denis.DAO;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.LinkedList;
+import java.util.List;
+
 import be.Denis.Model.*;
 
 public abstract class DAO<T> {
@@ -30,19 +32,11 @@ public abstract class DAO<T> {
 		return false;
 	}
 	
-	public boolean create(Balade obj, int numResponsable) {
-		return false;
-	}
-	
-	public LinkedList<Membre> GetListMon() {
-		return null;
-	}
-	
 	public LinkedList<Balade> findAllBalade(int i){
 		return null;
 	}
 	
-	public Float soldeMembre(int matricule) {
+	public Double soldeMembre(int matricule) {
 		return null;
 	}
 
@@ -51,9 +45,27 @@ public abstract class DAO<T> {
 		return false;
 	}
 	
-	public void reservation(Membre membre, int nbrP, int nbrV) {
-		
+	public boolean reservation(Membre membre, Balade balade, int nbrP, int nbrV) {
+		return false;
 	}
 	
+	public List<Categorie> listCat(int id){
+		return null;
+	}
+
+	public boolean addCategorie(Membre membre, Categorie categorie) {
+		return false;
+	}
 	
+	public boolean addTransaction(Membre obj, String type, double montant) {
+		return false;
+	}
+	
+	public boolean reservationExist(Membre obj, Balade balade) {
+		return false;
+	}
+
+	public boolean create(Membre membre, Vehicule obj) {
+		return false;
+	}
 }

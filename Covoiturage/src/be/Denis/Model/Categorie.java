@@ -6,6 +6,12 @@ public class Categorie {
 	private int numCategorie;
 	
 	/**
+	 * @return the nomCategorie
+	 */
+	public String getNomCategorie() {
+		return nomCategorie;
+	}
+	/**
 	 * @return the numCategorie
 	 */
 	public int getNumCategorie() {
@@ -22,5 +28,13 @@ public class Categorie {
 	
 	protected void ajouterMembre() {
 		
+	}
+	
+	public boolean equals(Categorie c){
+		if (this.numCategorie == c.numCategorie) {
+			c = this;
+			return true;
+		}
+		return false;
 	}
 }

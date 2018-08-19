@@ -10,6 +10,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
+
+import be.Denis.Model.Responsable;
+
 import javax.swing.UIManager;
 @SuppressWarnings("serial")
 public class MenuResponsable extends JPanel {
@@ -22,14 +25,14 @@ public class MenuResponsable extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public MenuResponsable(DashBoard bureau) {
+	public MenuResponsable(DashBoard bureau, Responsable responsable) {
 		setForeground(Color.DARK_GRAY);
 		setBackground(Color.DARK_GRAY);
 		setBorder(UIManager.getBorder("Button.border"));
 		setLayout(new GridLayout(0, 1, 0, 0));
 		setBounds(5,5,180,600);
 		
-		btnListeBalade = new JButton("Balade");
+		btnListeBalade = new JButton("Balades");
 		btnListeBalade.setForeground(Color.BLUE);
 		btnListeBalade.setBackground(Color.WHITE);
 		btnListeBalade.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -77,6 +80,7 @@ public class MenuResponsable extends JPanel {
 		btnDeconnexion.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				responsable.updateInfo();
 				bureau.dispose();
 				Login.init();
 			}

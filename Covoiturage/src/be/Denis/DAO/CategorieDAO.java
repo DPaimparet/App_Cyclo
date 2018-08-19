@@ -4,7 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
@@ -41,8 +44,41 @@ public class CategorieDAO extends DAO<Categorie>{
 
 	@Override
 	public LinkedList<Categorie> findAll(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		int annee = Calendar.getInstance().get(Calendar.YEAR);
+		LinkedList<Categorie> listeCat = new LinkedList<Categorie>();
+		Categorie categorie = null;
+		String nomCat;
+		String req = "SELECT C.idCategorie, C.categorie, P.annee "
+				+"FROM categorie C INNER JOIN personne_categorie P "
+				+"ON C.idCategorie = P.idCategorie "
+				+"WHERE idPersonne = ? AND annee = ?";
+		try {
+			PreparedStatement prepare = connect.prepareStatement(req);
+			prepare.setInt(1, id);
+			prepare.setInt(2, annee);
+			ResultSet resultat = prepare.executeQuery();
+			
+			while(resultat.next()) {
+				nomCat = resultat.getString("categorie");
+				if(nomCat.equals("route")) {
+					categorie = new Cyclo(nomCat);
+				}
+				if(nomCat.equals("descendeur")) {
+					categorie = new Descente(nomCat);
+				}
+				if(nomCat.equals("randonneur")) {
+					categorie = new Randonneur(nomCat);
+				}
+				if(nomCat.equals("trialiste")) {
+					categorie = new Trialiste(nomCat);
+				}
+				listeCat.add(categorie);
+			}
+		}catch(SQLException e){
+			JOptionPane.showMessageDialog(null, "CategorieDAO : " + e);
+		}
+		
+		return listeCat;
 	}
 
 	@Override
@@ -65,13 +101,13 @@ public class CategorieDAO extends DAO<Categorie>{
 					categorie = new Cyclo(nomCat);
 				}
 				if(nomCat.equals("descendeur")) {
-					categorie = new Cyclo(nomCat);
+					categorie = new Descente(nomCat);
 				}
 				if(nomCat.equals("randonneur")) {
-					categorie = new Cyclo(nomCat);
+					categorie = new Randonneur(nomCat);
 				}
 				if(nomCat.equals("trialiste")) {
-					categorie = new Cyclo(nomCat);
+					categorie = new Trialiste(nomCat);
 				}
 			}
 		}
