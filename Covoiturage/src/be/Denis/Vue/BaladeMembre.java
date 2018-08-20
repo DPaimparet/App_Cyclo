@@ -52,7 +52,7 @@ public class BaladeMembre extends JPanel {
 		setBounds(0, 0, 800, 800);
 		setLayout(null);
 
-		JLabel lblPlanning = new JLabel("Planning des balades");
+		JLabel lblPlanning = new JLabel("Planning de vos balades");
 		lblPlanning.setForeground(Color.WHITE);
 		lblPlanning.setFont(new Font("Georgia", Font.BOLD, 25));
 		lblPlanning.setHorizontalAlignment(SwingConstants.CENTER);
@@ -61,7 +61,7 @@ public class BaladeMembre extends JPanel {
 
 		
 
-		String titre[] = { "Balade", "Date", "Lieu", "Forfait", "Participant", "Information" };
+		String titre[] = { "Balade", "Date", "Lieu", "Forfait", "Participant", "Information" , "cat" };
 		data = dataJtable(membre);
 
 		this.tableau = new JTable(data, titre);
@@ -72,11 +72,11 @@ public class BaladeMembre extends JPanel {
 		scrollPane.setBounds(150, 103, 500, 300);
 		add(scrollPane);
 
-		JLabel lblGestionBalade = new JLabel("Gestion balade :");
+		JLabel lblGestionBalade = new JLabel("Information de la balade :");
 		lblGestionBalade.setHorizontalAlignment(SwingConstants.CENTER);
 		lblGestionBalade.setForeground(Color.WHITE);
 		lblGestionBalade.setFont(new Font("Georgia", Font.BOLD, 20));
-		lblGestionBalade.setBounds(150, 414, 167, 30);
+		lblGestionBalade.setBounds(150, 410, 303, 30);
 		add(lblGestionBalade);
 
 		panel = new JPanel();
@@ -118,6 +118,7 @@ public class BaladeMembre extends JPanel {
 		panel.add(lblLieu);
 		
 		textFieldLieu = new JTextField();
+		textFieldLieu.setEditable(false);
 		textFieldLieu.setBounds(176, 58, 244, 20);
 		textFieldLieu.setColumns(10);
 		panel.add(textFieldLieu);
@@ -130,6 +131,7 @@ public class BaladeMembre extends JPanel {
 		panel.add(lblInformation);
 
 		textAreaInfo = new JTextArea();
+		textAreaInfo.setEditable(false);
 		textAreaInfo.setBounds(176, 118, 244, 98);
 		panel.add(textAreaInfo);
 
@@ -141,18 +143,14 @@ public class BaladeMembre extends JPanel {
 		panel.add(lblInformation);
 
 		textFieldForfait = new JTextField();
+		textFieldForfait.setEditable(false);
 		textFieldForfait.setBounds(176, 220, 86, 20);
 		textFieldForfait.setColumns(10);
 		panel.add(textFieldForfait);
-
-		JButton btnModif = new JButton("Modifier");
-		btnModif.setBounds(61, 249, 176, 40);
-		btnModif.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 20));
-		panel.add(btnModif);
 		
 		JButton btnSupprimer = new JButton("Supprimer");
 		btnSupprimer.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 20));
-		btnSupprimer.setBounds(271, 249, 176, 40);
+		btnSupprimer.setBounds(162, 251, 176, 40);
 		panel.add(btnSupprimer);
 		
 		lblError = new JLabel("");
@@ -165,6 +163,7 @@ public class BaladeMembre extends JPanel {
 			public void mouseClicked(MouseEvent arg0) {
 				ligne = tableau.getSelectedRow();
 				Date date = new Date();
+				int categorie;
 				int numBalade = (int) tableau.getValueAt(ligne, 0);
 				String dateInString = (String) tableau.getValueAt(ligne, 1);
 				SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
@@ -179,7 +178,19 @@ public class BaladeMembre extends JPanel {
 				Double forfait = (Double) tableau.getValueAt(ligne, 3);
 				int nbrParticipant = (int) tableau.getValueAt(ligne, 4);
 				String infoBalade = (String) tableau.getValueAt(ligne, 5);
-				//balade = new Balade(numBalade, lieu, date, infoBalade, nbrParticipant, forfait );
+				String cat = (String) tableau.getValueAt(ligne, 6);
+				
+				if (cat == "Route") {
+					categorie = 1;
+				} else if (cat == "Descendeur") {
+					categorie = 2;
+				} else if (cat == "Randonneur") {
+					categorie = 3;
+				} else {
+					categorie = 4;
+				}
+				
+				balade = new Balade(numBalade, lieu, date, infoBalade, nbrParticipant, forfait, categorie );
 				
 				textFieldNumBalade.setText(String.valueOf(tableau.getValueAt(ligne, 0)));
 				textFieldLieu.setText(lieu);
@@ -189,57 +200,14 @@ public class BaladeMembre extends JPanel {
 			}
 		});
 		
-		btnModif.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if(balade != null) {
-					boolean error = false;
-					// Test que les champs ne soient pas vide
-					if(textFieldLieu.getText().isEmpty() || textFieldForfait.getText().isEmpty() || textAreaInfo.getText().isEmpty() || dateChooser.getDate() == null ) {
-						error = true;
-						lblError.setForeground(new Color(241, 57, 83));
-						lblError.setText("Tous les champs doivent être remplis");
-					}
-					
-					// Vérifie que l'on rentre une valeur correcte
-					String pattern = "^-?\\d*\\.{0,1}\\d+$";
-					if(!textFieldForfait.getText().matches(pattern) ) {
-						error = true;
-						lblError.setForeground(new Color(241, 57, 83));
-						lblError.setText("Entrez un nombre correcte pour le forfait");
-					}
-			
-					// s'il n'y a pas d'erreur, mettre à jour
-					if(!error) {
-						int indexList = -1;
-						balade.setNumBalade(Integer.parseInt(textFieldNumBalade.getText()));
-						balade.setLieu(textFieldLieu.getText());
-						balade.setDateBalade(dateChooser.getDate());
-						balade.setInfoBalade(textAreaInfo.getText());
-						balade.setForfait(Double.parseDouble(textFieldForfait.getText()));
-						
-						lblError.setText("");
-						
-						for(Balade b : membre.getListeBalade()) {
-							if(b.equals(balade)) {
-								indexList = membre.getListeBalade().indexOf(b);
-							}
-						}
-						balade.updateBalade();
-						membre.getListeBalade().set(indexList, balade);
-						dashBoard.changeScreen("baladeResponsable");
-					}
-				}
-			}
-		});
-		
 		btnSupprimer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(balade != null) {
 					for(Balade b : membre.getListeBalade()) {
 						if(b.equals(balade)) {
-							balade.supprimerBalade();
+							membre.annulerBalade(b);
 							membre.getListeBalade().remove(b);
-							dashBoard.changeScreen("baladeResponsable");
+							dashBoard.changeScreen("baladeMembre");
 						}
 					}
 				}
@@ -257,8 +225,10 @@ public class BaladeMembre extends JPanel {
 			}
 		}
 		
-		Object[][] data = new Object[nbrObject][6];
+		Object[][] data = new Object[nbrObject][7];
 		int i = 0;
+		int cat;
+		String nomCat;
 		for (Balade balade : membre.getListeBalade()) {
 			Date dateNow = new Date();
 			if (balade.getDateBalade().after(dateNow)) {
@@ -269,7 +239,19 @@ public class BaladeMembre extends JPanel {
 				data[i][3] = balade.getForfait();
 				data[i][4] = balade.getNbrParticipant();
 				data[i][5] = balade.getInfoBalade();
+				cat = balade.getCat();
+				
+				if (cat == 1) {
+					nomCat = "route";
+				} else if (cat == 2) {
+					nomCat = "descendeur";
+				} else if (cat == 3) {
+					nomCat = "randonneur";
+				} else {
+					nomCat = "trialiste";
+				}
 
+				data[i][6] = nomCat;
 				i++;
 			}
 		}

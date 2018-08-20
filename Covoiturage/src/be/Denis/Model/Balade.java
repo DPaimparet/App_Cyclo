@@ -21,6 +21,7 @@ public class Balade {
 	
 	private AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
 	private DAO<Balade> BaladeDAO = adf.getBaladeDAO();
+	private DAO<Vehicule> VehiculeDAO = adf.getVehiculeDAO();
 	
 	
 	/***
@@ -108,6 +109,7 @@ public class Balade {
 		this.forfait = forfait;
 		this.nbrParticipant = nbrParticipant;
 		this.cat = cat;
+		listeVehicule = VehiculeDAO.findAll(numBalade);
 	}
 	/***
 	 * Méthodes de la classe

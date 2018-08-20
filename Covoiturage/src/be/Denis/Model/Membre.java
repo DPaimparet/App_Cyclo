@@ -1,5 +1,6 @@
 package be.Denis.Model;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
@@ -63,6 +64,11 @@ public class Membre extends Personne {
 	public void setListeCategorie(List<Categorie> listeCategorie) {
 		this.listeCategorie = listeCategorie;
 	}
+	
+	public Membre() {
+		super();
+		
+	}
 
 	public Membre(String nom, String prenom, int matricule, String login, String password, Date dateNaissance,
 			String adresse, String email, String sex, Date inscription, String fonction) {
@@ -71,23 +77,45 @@ public class Membre extends Personne {
 		listeCategorie = CategorieDAO.findAll(matricule);
 		listeVehicule = VehiculeDAO.findAll(matricule);
 	}
+	
+	public Membre getMembre(int id) {
+		Membre m = null;
+		try {
+			m = MembreDAO.find(id);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return m;
+	}
 
 	public void updateInfo() {
 		MembreDAO.update(this);
 	}
 
-	public void payerCotisation(int cotisation) {
-		soldeCompte += cotisation;
-		// TODO update DB
-	}
-
-	public void payerForfaitBalade(float forfait) {
-		soldeCompte += forfait;
-		// TODO update DB
+	public void payerTransaction(Transaction transaction) {
+		soldeCompte -= transaction.getValeur();
+		MembreDAO.payTransaction(this, transaction);
 	}
 
 	public boolean reservationExist(Balade b) {
 		return BaladeDAO.reservationExist(this, b);
+	}
+	
+	public boolean propositionExist(Balade b) {
+		boolean exist = false;
+		List<Vehicule> liste =VehiculeDAO.findVehiculeBalade(b); 
+		for(Vehicule v : listeVehicule) {
+			for(Vehicule v2 : liste) {
+				if(v.getImmatriculation().equals(v2.getImmatriculation())) {
+					exist = true;
+				}
+			}
+		}
+		return exist;
 	}
 
 	public boolean reserverBalade(Balade b, int nbrP, int nbrV) {
@@ -99,17 +127,15 @@ public class Membre extends Personne {
 		return reserver;
 	}
 
-	public void proposerPlace(int nbrP, int nbrV) {
-
+	public void proposerPlace(Balade b, Vehicule v) {
+		VehiculeDAO.propositionVehicule(b, v);
 	}
 
 	public void ajouterVehicule(Vehicule vehicule) {
-		listeVehicule.add(vehicule);
 		VehiculeDAO.create(this, vehicule);
 	}
 
 	public void retirerVehicule(Vehicule vehicule) {
-		listeVehicule.remove(vehicule);
 		VehiculeDAO.delete(vehicule);
 	}
 
@@ -149,6 +175,26 @@ public class Membre extends Personne {
 
 		}
 		return liste;
+	}
+	
+	public LinkedList<Balade> getListParticipe(){
+		LinkedList<Balade> liste = new LinkedList<Balade>();
+		for(Categorie c : listeCategorie) {
+			for(Balade b : BaladeDAO.findAllBalade(c.getNumCategorie())) {
+				liste.add(b);
+			}
+		}
+		return liste;
+	}
+	
+	public boolean annulerBalade(Balade b) {
+		return MembreDAO.annulerBalade(this, b);
+	}
+	
+	public LinkedList<Transaction> compte() {
+		LinkedList<Transaction> tabCompte = new LinkedList<Transaction>();
+		tabCompte = MembreDAO.tabCompte(this);
+		return tabCompte;
 	}
 
 }

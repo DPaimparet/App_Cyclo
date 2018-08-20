@@ -39,13 +39,17 @@ public class MenuTresorier extends JPanel {
 		btnHomeTresorier.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				bureau.changeScreen("homeTresorier");
+				bureau.changeScreen("accueilTresorier");
 				
 			}
 		});
 		add(btnHomeTresorier);
 		
 		btnCompteDeplacement = new JButton("Frais déplacement");
+		btnCompteDeplacement.setForeground(Color.BLUE);
+		btnCompteDeplacement.setBackground(Color.WHITE);
+		btnCompteDeplacement.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btnCompteDeplacement.setIcon(new ImageIcon("images\\money-wallet-icon.png"));
 		btnCompteDeplacement.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -54,11 +58,15 @@ public class MenuTresorier extends JPanel {
 		});
 		add(btnCompteDeplacement);
 		
-		btnCompteForfait = new JButton("Compte impayé");
+		btnCompteForfait = new JButton("Cotisation");
+		btnCompteForfait.setForeground(Color.BLUE);
+		btnCompteForfait.setBackground(Color.WHITE);
+		btnCompteForfait.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btnCompteForfait.setIcon(new ImageIcon("images\\Bank-icon.png"));
 		btnCompteForfait.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				bureau.changeScreen("compteDeplacement");
+				bureau.changeScreen("compteForfait");
 			}
 		});
 		add(btnCompteForfait);
@@ -71,7 +79,7 @@ public class MenuTresorier extends JPanel {
 		btnProfil.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				bureau.changeScreen("profil");
+				bureau.changeScreen("profilTresorier");
 			}
 		});
 		add(btnProfil);

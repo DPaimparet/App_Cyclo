@@ -188,23 +188,23 @@ public class BaladeDAO extends DAO<Balade> {
 	}
 
 	public boolean reservationExist(Membre obj, Balade balade) {
+		boolean reservation = false;
+		String reqResExit = "SELECT * FROM reservation WHERE idBalade = ? AND idPersonne = ?";
 		try {
-			String reqResExit = "SELECT * FROM reservation WHERE idBalade = ? AND idPersonne = ?";
 			PreparedStatement stmt = connect.prepareStatement(reqResExit);
 			stmt.setInt(1, balade.getNumBalade());
 			stmt.setInt(2, obj.getMatricule());
 
 			ResultSet resultat = stmt.executeQuery();
 			if (resultat.next()) {
-				return true;
-			}else {
-				return false;
+				reservation = true;
 			}
 
 		} catch (SQLException e) {
 			System.out.println(e);
 			return false;
 		}
+		return reservation;
 	}
 
 	public boolean reservation(Membre obj, Balade balade, int nbrP, int nbrV) {

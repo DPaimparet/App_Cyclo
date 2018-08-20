@@ -8,6 +8,7 @@ import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
 
+import be.Denis.Model.Balade;
 import be.Denis.Model.Membre;
 import be.Denis.Model.Vehicule;
 
@@ -49,7 +50,7 @@ public class VehiculeDAO extends DAO<Vehicule> {
 			prepare.setString(1, obj.getImmatriculation());
 			prepare.executeUpdate();
 			
-			JOptionPane.showMessageDialog(null, "Le vehicule " + obj.getMarque() + " " + obj.getModel() + " a été ajouté" );
+			JOptionPane.showMessageDialog(null, "Le vehicule " + obj.getMarque() + " " + obj.getModel() + " a été supprimé" );
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "VehiculeDAO : " + e);
 			return false;
@@ -83,6 +84,27 @@ public class VehiculeDAO extends DAO<Vehicule> {
 		}
 		return liste;
 	}
+	
+	public LinkedList<Vehicule> findVehiculeBalade(Balade obj)  {
+		LinkedList<Vehicule> liste = new LinkedList<Vehicule>();
+		String reqListe = "SELECT immatriculation, marque, model, placePersonne, placeVelo"
+				+ " FROM vehicule V"
+				+ " INNER JOIN vehicule_balade VB"
+				+ " ON V.idVehicule = VB.idVehicule"
+				+ " WHERE idBalade = ?";
+		try {
+			PreparedStatement prepare = connect.prepareStatement(reqListe);
+			prepare.setInt(1, obj.getNumBalade());
+			ResultSet resultat = prepare.executeQuery();
+			while (resultat.next()) {
+				liste.add(new Vehicule(resultat.getString("immatriculation"), resultat.getString("marque"),
+						resultat.getString("model"), resultat.getInt("placePersonne"), resultat.getInt("placeVelo")));
+			}
+		} catch (SQLException e) {
+			System.out.println(e);
+		}
+		return liste;
+	}
 
 	@Override
 	public Vehicule find(int id) throws ClassNotFoundException, SQLException {
@@ -94,6 +116,36 @@ public class VehiculeDAO extends DAO<Vehicule> {
 	public boolean create(Vehicule obj) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	public boolean propositionVehicule(Balade b, Vehicule v) {
+		int idVehicule = 0;
+		String reqVehicule = "SELECT idVehicule FROM vehicule WHERE immatriculation = ?";
+		String reqProposition = "INSERT INTO vehicule_balade "
+								+ " (idVehicule, idBalade, nbrPersonne, nbrVelo )"
+								+ " VALUES (?,?,?,?)";
+		try {
+			PreparedStatement prepare = connect.prepareStatement(reqVehicule);
+			prepare.setString(1, v.getImmatriculation());
+			ResultSet resultat = prepare.executeQuery();
+			if(resultat.next()) {
+				idVehicule = resultat.getInt("idVehicule");
+			}
+			
+			PreparedStatement stmt = connect.prepareStatement(reqProposition);
+			stmt.setInt(1, idVehicule);
+			stmt.setInt(2, b.getNumBalade());
+			stmt.setInt(3, v.getNbrPlacePersonne());
+			stmt.setInt(4, v.getNbrPlaceVelo());
+			stmt.executeUpdate();
+			JOptionPane.showMessageDialog(null, "La participation du véhicule " + v.getMarque() + " " + v.getModel() + " a bien été enregistré");
+
+		}
+		catch(SQLException e) {
+			JOptionPane.showMessageDialog(null, e);
+			return false;
+		}
+		return true;
 	}
 
 }

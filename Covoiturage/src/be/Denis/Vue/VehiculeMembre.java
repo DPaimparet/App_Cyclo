@@ -16,6 +16,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import be.Denis.Model.Balade;
 import be.Denis.Model.Membre;
 import be.Denis.Model.Vehicule;
 
@@ -164,19 +165,29 @@ public class VehiculeMembre extends JPanel {
 		btnSupprimer.setBounds(271, 249, 176, 40);
 		panel.add(btnSupprimer);
 
-		btnSupprimer.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				lblError.setText("");
-				if(vehicule == null) {
-					lblError.setText("Vous ne disposez pas de véhicule");
-				}
-				else {
-					m.retirerVehicule(vehicule);
-					m.getListeVehicule().remove(vehicule);
-					dashBoard.changeScreen("vehiculeMembre");
-				}
+		
+
+		tableau.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+
+				ligne = tableau.getSelectedRow();
+				String marque = (String) tableau.getValueAt(ligne, 0);
+				String model = (String) tableau.getValueAt(ligne, 1);
+				String immatriculation = (String) tableau.getValueAt(ligne, 2);
+				int nbrPersonne = (int) tableau.getValueAt(ligne, 3);
+				int nbrVelo = (int) tableau.getValueAt(ligne, 4);
+
+				textFieldImmatriculation.setText(immatriculation);
+				textFieldMarque.setText(marque);
+				textFieldModel.setText(model);
+				textFieldPersonne.setText(String.valueOf(nbrPersonne));
+				textFieldVelo.setText(String.valueOf(nbrVelo));
+				
+				vehicule = new Vehicule(immatriculation, marque, model, nbrPersonne, nbrVelo);
 			}
 		});
+		
 
 		btnAjouter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -208,33 +219,31 @@ public class VehiculeMembre extends JPanel {
 
 					vehicule = new Vehicule(immatriculation, marque, model, nbrPersonne, nbrVelo);
 					m.ajouterVehicule(vehicule);
+					m.getListeVehicule().add(vehicule);
 					dashBoard.changeScreen("vehiculeMembre");
 				}
 			}
 		});
-
-		tableau.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-
-				ligne = tableau.getSelectedRow();
-				String marque = (String) tableau.getValueAt(ligne, 0);
-				String model = (String) tableau.getValueAt(ligne, 1);
-				String immatriculation = (String) tableau.getValueAt(ligne, 2);
-				int nbrPersonne = (int) tableau.getValueAt(ligne, 3);
-				int nbrVelo = (int) tableau.getValueAt(ligne, 4);
-
-				textFieldImmatriculation.setText(immatriculation);
-				textFieldMarque.setText(marque);
-				textFieldModel.setText(model);
-				textFieldPersonne.setText(String.valueOf(nbrPersonne));
-				textFieldVelo.setText(String.valueOf(nbrVelo));
-				
-				vehicule = new Vehicule(immatriculation, marque, model, nbrPersonne, nbrVelo);
+		
+		btnSupprimer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(vehicule != null) {
+					for(Vehicule v : m.getListeVehicule()) {
+						if(v.equals(vehicule)) {
+							m.retirerVehicule(v);
+							m.getListeVehicule().remove(v);
+							
+							dashBoard.changeScreen("vehiculeMembre");
+						}
+					}
+				}else {
+					lblError.setText("Aucun véhicule sélectionné");
+				}
 			}
 		});
-
 	}
+	
+	
 
 	public Object[][] dataJtable(Membre m) {
 		int nbrObject = m.getListeVehicule().size();

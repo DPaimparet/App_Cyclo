@@ -118,7 +118,9 @@ public class DashBoard extends JFrame {
 		case "Tresorier" :  tresorier = new Tresorier(p.getNom(), p.getPrenom(), p.getMatricule(), p.getLogin(), p.getPassword(),
 		 		 			 p.getDateNaissance(), p.getAdresse(), p.getEmail(), p.getSex(), p.getInscription(), p.getFonction());
 							MenuTresorier menuTresorier = new MenuTresorier(this,tresorier);
-		 					contentMenu.add(menuTresorier,BorderLayout.CENTER);
+							contentMenu.add(menuTresorier,BorderLayout.CENTER);
+							AccueilTresorier acceuilTresorier = new AccueilTresorier(tresorier,this);
+		 					screen.add(acceuilTresorier);
 		 					this.validate();
 		 					break;
 		}
@@ -173,9 +175,16 @@ public class DashBoard extends JFrame {
 		break;
 		case "accueilMembre" : newScreen = new AccueilMembre(membre,this);
 		break;
+		case "accueilTresorier" : newScreen = new AccueilTresorier(tresorier,this);
+		break;
 		case "vehiculeMembre" : newScreen = new VehiculeMembre(membre,this);
 		break;
-		
+		case "compteMembre" : newScreen = new CompteMembre(membre,this);
+		break;
+		case "compteDeplacement" : newScreen = new CompteDeplacement(tresorier,this);
+		break;
+		case "compteForfait" : newScreen = new CompteForfait(tresorier,this);
+		break;
 		}
 		screen.removeAll();
 		screen.add(newScreen,BorderLayout.CENTER);

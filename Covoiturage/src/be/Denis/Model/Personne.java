@@ -228,6 +228,10 @@ public class Personne {
 	}
 
 	
+	public Personne() {
+		// TODO Auto-generated constructor stub
+	}
+
 	/***
 	 * Méthode de connexion qui permet de retourner l'utilisateur vers sa vue si il est présent dans la base de données
 	 * @return

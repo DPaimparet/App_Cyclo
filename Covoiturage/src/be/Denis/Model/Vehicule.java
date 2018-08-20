@@ -76,6 +76,14 @@ public class Vehicule {
 		this.nbrPlaceVelo = nbrPlaceVelo;
 	}
 	
+	public boolean equals(Vehicule v){
+		if (this.immatriculation == v.immatriculation) {
+			v = this;
+			return true;
+		}
+		return false;
+	}
+	
 	
 
 }
